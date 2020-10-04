@@ -1,4 +1,4 @@
-#ifndef __p2List_H__
+#ifndef __List_H__
 #define __p2List_H__
 
 #include "Globals.h"

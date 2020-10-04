@@ -54,11 +54,10 @@ bool ModuleAudio::CleanUp()
 		Mix_FreeMusic(music);
 	}
 
-	p2List_item<Mix_Chunk*>* item;
-
-	for(item = fx.getFirst(); item != NULL; item = item->next)
+	for(std::vector<Mix_Chunk*>::iterator item = fx.begin(); item != fx.end(); item++)
 	{
-		Mix_FreeChunk(item->data);
+		Mix_Chunk *chunk = *item;
+		Mix_FreeChunk(chunk);
 	}
 
 	fx.clear();
@@ -132,8 +131,8 @@ unsigned int ModuleAudio::LoadFx(const char* path)
 	}
 	else
 	{
-		fx.add(chunk);
-		ret = fx.count();
+		fx.push_back(chunk);
+		ret = fx.capacity();
 	}
 
 	return ret;
@@ -144,12 +143,16 @@ bool ModuleAudio::PlayFx(unsigned int id, int repeat)
 {
 	bool ret = false;
 
-	Mix_Chunk* chunk = NULL;
-	
-	if(fx.at(id-1, chunk) == true)
+	Mix_Chunk* chunk = fx.at(id - 1);
+
+	if(chunk != nullptr)
 	{
 		Mix_PlayChannel(-1, chunk, repeat);
 		ret = true;
+	}
+	else
+	{
+		ret = false;
 	}
 
 	return ret;
