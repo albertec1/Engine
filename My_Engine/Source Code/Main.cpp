@@ -2,9 +2,12 @@
 #include "Application.h"
 #include "Globals.h"
 
-#include "SDL/include/SDL.h"
-#pragma comment( lib, "Dependencies/SDL/libx86/SDL2.lib")
-#pragma comment( lib, "Dependencies/SDL/libx86/SDL2main.lib" )
+#include "Source Code/Dependencies/SDL/include/SDL.h"
+#pragma comment( lib, "Source Code/Dependencies/SDL/libx86/SDL2.lib")
+#pragma comment( lib, "Source Code/Dependencies/SDL/libx86/SDL2main.lib" )
+					   
+#pragma comment (lib, "Source Code/Dependencies/glew/libx86/Win32/glew32.lib")
+#pragma comment (lib, "Source Code/Dependencies/glew/libx86/Win32/glew32s.lib")
 
 enum main_states
 {
