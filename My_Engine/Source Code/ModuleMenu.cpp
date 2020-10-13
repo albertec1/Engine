@@ -1,13 +1,13 @@
 #include "Application.h"
 #include "ModuleMenu.h"
 
-#include "Source Code/Dependencies/ImGUI/imgui.h"
-#include "Source Code/Dependencies/ImGUI/imgui_internal.h"
-#include "Source Code/Dependencies/ImGUI/imgui_impl_sdl.h"
-#include "Source Code/Dependencies/ImGUI/imgui_impl_opengl3.h"
+#include "Dependencies/ImGUI/imgui.h"
+#include "Dependencies/ImGUI/imgui_internal.h"
+#include "Dependencies/ImGUI/imgui_impl_sdl.h"
+#include "Dependencies/ImGUI/imgui_impl_opengl3.h"
 		  
-#include "Source Code/Dependencies/glew/include/GL/glew.h"
-#include "Source Code/Dependencies/SDL/include/SDL_opengl.h"
+#include "Dependencies/glew/include/GL/glew.h"
+#include "Dependencies/SDL/include/SDL_opengl.h"
 
 
 ModuleMenu::ModuleMenu(Application* app, bool start_enabled) : Module(app, start_enabled)
@@ -74,9 +74,10 @@ bool ModuleMenu::CleanUp()
 	ImGui_ImplSDL2_Shutdown();
 	ImGui::DestroyContext();
 
-	SDL_GL_DeleteContext(gl_context);
+	//SDL_GL_DeleteContext(gl_context);
 	SDL_DestroyWindow(window);
 	SDL_Quit();
+
 	return true;
 }
 
@@ -104,13 +105,17 @@ update_status ModuleMenu::Update(float dt)
 		ImGui::EndMenuBar();
 		ImGui::End();
 	}
-	
-	bool v = true;
-	ImGui::ShowDemoWindow();
-	ImGui::Begin("DEMO");
-	ImGui::Checkbox("Demo Window", &v);
 
-	ImGui::End();
+	//Window with a checkbox allowing to show the demo window of ImGui
+	if (show_demo_window)
+		ImGui::ShowDemoWindow(&show_demo_window);
+	{
+		ImGui::Begin("DEMO");
+		ImGui::Checkbox("Demo Window", &show_demo_window);
+
+		ImGui::End();
+	}
+
 
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;       // Enable Keyboard Controls

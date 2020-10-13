@@ -11,6 +11,15 @@
     <Filter Include="Helpers">
       <UniqueIdentifier>{975c6057-51ca-44e2-83d3-7fe54a09621b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Code\Dependencies">
+      <UniqueIdentifier>{4c40967a-48f3-48fc-96f2-e56a6b3ace86}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Code\Dependencies\glew">
+      <UniqueIdentifier>{613c30be-03e3-4ac2-a4f0-5d01f52a576c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Code\Dependencies\ImGui">
+      <UniqueIdentifier>{4d5df2ae-c218-4c78-92aa-3496fc8098e3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Application.cpp">
@@ -60,6 +69,24 @@
     </ClCompile>
     <ClCompile Include="Source Code\Primitive.cpp">
       <Filter>Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\Dependencies\ImGui\imgui.cpp">
+      <Filter>Source Code\Dependencies\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\Dependencies\ImGui\imgui_demo.cpp">
+      <Filter>Source Code\Dependencies\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\Dependencies\ImGui\imgui_draw.cpp">
+      <Filter>Source Code\Dependencies\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\Dependencies\ImGui\imgui_impl_opengl3.cpp">
+      <Filter>Source Code\Dependencies\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\Dependencies\ImGui\imgui_impl_sdl.cpp">
+      <Filter>Source Code\Dependencies\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\Dependencies\ImGui\imgui_widgets.cpp">
+      <Filter>Source Code\Dependencies\ImGui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -113,6 +140,42 @@
     </ClInclude>
     <ClInclude Include="Source Code\Primitive.h">
       <Filter>Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\Dependencies\glew\include\GL\eglew.h">
+      <Filter>Source Code\Dependencies\glew</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\Dependencies\glew\include\GL\glew.h">
+      <Filter>Source Code\Dependencies\glew</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\Dependencies\glew\include\GL\glxew.h">
+      <Filter>Source Code\Dependencies\glew</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\Dependencies\glew\include\GL\wglew.h">
+      <Filter>Source Code\Dependencies\glew</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\Dependencies\ImGui\imconfig.h">
+      <Filter>Source Code\Dependencies\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\Dependencies\ImGui\imgui.h">
+      <Filter>Source Code\Dependencies\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\Dependencies\ImGui\imgui_impl_opengl3.h">
+      <Filter>Source Code\Dependencies\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\Dependencies\ImGui\imgui_impl_sdl.h">
+      <Filter>Source Code\Dependencies\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\Dependencies\ImGui\imgui_internal.h">
+      <Filter>Source Code\Dependencies\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\Dependencies\ImGui\imstb_rectpack.h">
+      <Filter>Source Code\Dependencies\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\Dependencies\ImGui\imstb_textedit.h">
+      <Filter>Source Code\Dependencies\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\Dependencies\ImGui\imstb_truetype.h">
+      <Filter>Source Code\Dependencies\ImGui</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
