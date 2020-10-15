@@ -11,7 +11,7 @@
 #include "ModuleCamera3D.h"
 #include "ModulePhysics3D.h"
 #include "ModuleMenu.h" 
-
+//#include "Improter.h"
 
 #include <list>
 
@@ -19,13 +19,13 @@ class Application
 {
 public:
 	ModuleWindow* window;
+	ModuleMenu* menu;
 	ModuleInput* input;
 	//ModuleAudio* audio;
 	ModuleSceneIntro* scene_intro;
 	ModuleRenderer3D* renderer3D;
 	ModuleCamera3D* camera;
 	ModulePhysics3D* physics;
-	ModuleMenu* menu;
 
 
 private:

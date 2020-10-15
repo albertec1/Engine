@@ -20,6 +20,9 @@
     <Filter Include="Source Code\Dependencies\ImGui">
       <UniqueIdentifier>{4d5df2ae-c218-4c78-92aa-3496fc8098e3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Code\Dependencies\Assimp">
+      <UniqueIdentifier>{5524385b-85e4-4e31-a0b5-3fdbca772b56}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Application.cpp">
@@ -87,6 +90,9 @@
     </ClCompile>
     <ClCompile Include="Source Code\Dependencies\ImGui\imgui_widgets.cpp">
       <Filter>Source Code\Dependencies\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Improter.cpp">
+      <Filter>Source Code</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -176,6 +182,18 @@
     </ClInclude>
     <ClInclude Include="Source Code\Dependencies\ImGui\imstb_truetype.h">
       <Filter>Source Code\Dependencies\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\Dependencies\Assimp\include\cimport.h">
+      <Filter>Source Code\Dependencies\Assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\Dependencies\Assimp\include\postprocess.h">
+      <Filter>Source Code\Dependencies\Assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\Dependencies\Assimp\include\scene.h">
+      <Filter>Source Code\Dependencies\Assimp</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\Improter.h">
+      <Filter>Source Code</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

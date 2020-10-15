@@ -1,7 +1,14 @@
-#include "Globals.h"
 #include "Application.h"
 #include "ModuleRenderer3D.h"
+
+#include "Dependencies/glew/include/GL/glew.h"
 #include "Dependencies/SDL/include/SDL_opengl.h"
+
+#include "Dependencies/ImGUI/imgui.h"
+#include "Dependencies/ImGUI/imgui_internal.h"
+#include "Dependencies/ImGUI/imgui_impl_sdl.h"
+#include "Dependencies/ImGUI/imgui_impl_opengl3.h"
+
 #include <gl/GL.h>
 #include <gl/GLU.h>
 
@@ -21,15 +28,17 @@ bool ModuleRenderer3D::Init()
 {
 	LOG("Creating 3D Renderer context");
 	bool ret = true;
-	
+
 	//Create context
-	context = SDL_GL_CreateContext(App->window->window);
-	if(context == NULL)
+	gl_context = SDL_GL_CreateContext(App->window->window);
+	if(gl_context == NULL)
 	{
 		LOG("OpenGL context could not be created! SDL_Error: %s\n", SDL_GetError());
 		ret = false;
 	}
 	
+	SDL_GL_MakeCurrent(App->window->window, gl_context);
+
 	if(ret == true)
 	{
 		//Use Vsync
@@ -64,7 +73,8 @@ bool ModuleRenderer3D::Init()
 		glClearDepth(1.0f);
 		
 		//Initialize clear color
-		glClearColor(0.f, 0.f, 0.f, 1.f);
+		bg_color = { 0.45f, 0.55f, 0.60f, 1.00f };
+		glClearColor(bg_color.at(0), bg_color.at(1), bg_color.at(2), bg_color.at(3));
 
 		//Check for error
 		error = glGetError();
@@ -123,6 +133,33 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 // PostUpdate present buffer to screen
 update_status ModuleRenderer3D::PostUpdate(float dt)
 {
+	SDL_Window* backup_current_window = SDL_GL_GetCurrentWindow();
+	SDL_GLContext backup_current_context = SDL_GL_GetCurrentContext();
+	SDL_GL_MakeCurrent(backup_current_window, backup_current_context);
+
+
+
+	ImGuiIO& io = ImGui::GetIO(); (void)io;
+	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;       // Enable Keyboard Controls
+	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;           // Enable Docking
+	io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;         // Enable Multi-Viewport / Platform Windows
+
+	//Render
+	//Render
+	ImGui::Render();
+	glViewport(0, 0, (int)io.DisplaySize.x, (int)io.DisplaySize.y);
+	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+	// Update and Render additional Platform Windows
+	if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+	{
+		SDL_Window* backup_current_window = SDL_GL_GetCurrentWindow();
+		SDL_GLContext backup_current_context = SDL_GL_GetCurrentContext();
+		ImGui::UpdatePlatformWindows();
+		ImGui::RenderPlatformWindowsDefault();
+		SDL_GL_MakeCurrent(backup_current_window, backup_current_context);
+	}
+
 	SDL_GL_SwapWindow(App->window->window);
 	return UPDATE_CONTINUE;
 }
@@ -132,7 +169,7 @@ bool ModuleRenderer3D::CleanUp()
 {
 	LOG("Destroying 3D Renderer");
 
-	SDL_GL_DeleteContext(context);
+	SDL_GL_DeleteContext(gl_context);
 
 	return true;
 }

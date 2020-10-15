@@ -3,6 +3,7 @@
 #include "Globals.h"
 #include "glmath.h"
 #include "Light.h"
+#include <vector>
 
 #define MAX_LIGHTS 8
 
@@ -22,7 +23,10 @@ public:
 public:
 
 	Light lights[MAX_LIGHTS];
-	SDL_GLContext context;
+	SDL_GLContext gl_context;
+
 	mat3x3 NormalMatrix;
 	mat4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
+
+	std::vector<float> bg_color;
 };

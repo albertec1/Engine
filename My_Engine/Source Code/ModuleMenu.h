@@ -15,9 +15,6 @@ public:
 	bool CleanUp() override;
 
 public:
-	SDL_Window* window;
-	SDL_WindowFlags window_flags;
-	SDL_GLContext gl_context;
 	bool show_demo_window;
 };
 

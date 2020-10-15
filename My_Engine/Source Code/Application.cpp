@@ -17,11 +17,11 @@ Application::Application()
 
 	// Main Modules
 	AddModule(window);
+	AddModule(menu);
 	AddModule(camera);
 	AddModule(input);
 	//AddModule(audio);
 	AddModule(physics);
-	AddModule(menu);
 	
 	// Scenes
 	AddModule(scene_intro);
