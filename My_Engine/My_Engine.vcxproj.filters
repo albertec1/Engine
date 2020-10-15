@@ -102,9 +102,6 @@
     <ClInclude Include="Source Code\Globals.h">
       <Filter>Source Code</Filter>
     </ClInclude>
-    <ClInclude Include="Source Code\Header.h">
-      <Filter>Source Code</Filter>
-    </ClInclude>
     <ClInclude Include="Source Code\Module.h">
       <Filter>Source Code</Filter>
     </ClInclude>

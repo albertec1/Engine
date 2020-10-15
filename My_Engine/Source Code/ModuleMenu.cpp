@@ -24,13 +24,16 @@ bool ModuleMenu::Start()
 	LOG("Init Editor");
 
 	//Initialize glew
-	glewInit();
+	GLenum err = glewInit();
+	LOG("Using Glew %s", glewGetString(GLEW_VERSION));
+
+	LOG("Vendor: %s", glGetString(GL_VENDOR));
+	LOG("Renderer: %s", glGetString(GL_RENDERER));
+	LOG("OpenGL version supported: %s", glGetString(GL_VERSION));
+	LOG("GLSL: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
 
 	//Set all the atributes and flags for our Gui window
 	const char* glsl_version = "#version 130";
-
-	SDL_GL_MakeCurrent(App->window->window, App->renderer3D->gl_context);
-	SDL_GL_SetSwapInterval(1);
 
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();

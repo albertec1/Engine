@@ -37,8 +37,32 @@ bool ModuleWindow::Init()
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
 
-		window_flags = (SDL_WindowFlags)(SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI);
-		window = SDL_CreateWindow("AnotherSmallEngine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720, window_flags);
+		int width = SCREEN_WIDTH * SCREEN_SIZE;
+		int height = SCREEN_HEIGHT * SCREEN_SIZE;
+		Uint32 flags = SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN;
+
+		if (WIN_FULLSCREEN == true)
+		{
+			flags |= SDL_WINDOW_FULLSCREEN;
+		}
+
+		if (WIN_RESIZABLE == true)
+		{
+			flags |= SDL_WINDOW_RESIZABLE;
+		}
+
+		if (WIN_BORDERLESS == true)
+		{
+			flags |= SDL_WINDOW_BORDERLESS;
+		}
+
+		if (WIN_FULLSCREEN_DESKTOP == true)
+		{
+			flags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
+		}
+
+		window_flags = (SDL_WindowFlags)(flags);
+		window = SDL_CreateWindow("AnotherSmallEngine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, window_flags);
 
 		if(window == NULL)
 		{
