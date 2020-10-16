@@ -1,0 +1,38 @@
+
+Vertex Buffer --> Just a memory buffer, a block of memory where we can put data.
+The difference is that the buffer is in OpenGL so the data is saved in the GPU.
+
+Shader --> Program that runs in the CPU.
+
+OpenGL operates like a state machine. Specify a shader, then a buffer and finally tell 
+OpenGl to draw the triangle.
+
+A vertex is not a position. A vertex can contain a lot more than just a position:
+texture coordinates, normals, colors, binormals, tangents, etc...
+
+Vertex attributes specify some information about the vertex for opengl to know how to
+interprete it.
+
+Vertex shaders and fragment/pixel shaders are the more common type of shaders.
+
+Draw Call -(things)-> vertex shader -(things)-> fragment shader --> pixels in screen
+
+Vertex shaders get called for each vertex we are trying to draw. Its purpouse is to 
+tell openGL where we want the vertex to be. It is also used to pass the attributes info
+to other stages of the pipeline (in our case fragment shader).
+
+Vertex shaders contain all the attributes information of the vertex they represent.
+If, for example, we have a camera; the global position of the vertex and the place 
+where we actually see it are different. In this case, we would apply the necessary 
+transformations to the shader to place the vertex in the correct place.
+
+//Rasterize = Draw on the screen
+
+The fragment shader determines the output color for a pixel. This means it gets called
+once for every pixel we have to rasterize.
+
+Keep in mind fragment shader is called a lot of times. Do as many operations as possible 
+outside of this stage!!
+
+
+

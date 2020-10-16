@@ -193,4 +193,7 @@
       <Filter>Source Code</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="Notes on openGL.txt" />
+  </ItemGroup>
 </Project>

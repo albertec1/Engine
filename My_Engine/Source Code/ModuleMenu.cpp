@@ -67,10 +67,6 @@ bool ModuleMenu::CleanUp()
 	ImGui_ImplSDL2_Shutdown();
 	ImGui::DestroyContext();
 
-	//SDL_GL_DeleteContext(gl_context);
-	SDL_DestroyWindow(App->window->window);
-	SDL_Quit();
-
 	return true;
 }
 
@@ -108,12 +104,6 @@ update_status ModuleMenu::Update(float dt)
 
 		ImGui::End();
 	}
-
-
-	ImGuiIO& io = ImGui::GetIO(); (void)io;
-	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;       // Enable Keyboard Controls
-	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;           // Enable Docking
-	io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;         // Enable Multi-Viewport / Platform Windows
 
 	return UPDATE_CONTINUE;
 }
