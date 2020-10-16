@@ -30,4 +30,9 @@ public:
 	mat4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
 
 	std::vector<float> bg_color;
+
+ //Testinng variables/////
+	float *positions;
+	unsigned int buffer;
+
 };
