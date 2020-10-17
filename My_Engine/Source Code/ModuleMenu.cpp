@@ -23,55 +23,6 @@ bool ModuleMenu::Start()
 {
 	LOG("Init Editor");
 
-	//Initialize glew
-	GLenum err = glewInit();
-	LOG("Using Glew %s", glewGetString(GLEW_VERSION));
-
-	LOG("Vendor: %s", glGetString(GL_VENDOR));
-	LOG("Renderer: %s", glGetString(GL_RENDERER));
-	LOG("OpenGL version supported: %s", glGetString(GL_VERSION));
-	LOG("GLSL: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
-
-
-	//EXAMPLE////////////////////////
-
-	float pArr[6]{
-	-0.5f, -0.5f,
-	 0.0f,  0.5f,
-	 0.5f, -0.5f
-	};
-
-	positions = pArr;
-
-	glGenBuffers(1, &buffer);
-	glBindBuffer(GL_ARRAY_BUFFER, buffer);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(byte) * 6, positions, GL_STATIC_DRAW);
-
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0);
-
-	std::string vertexShader =
-		"#version 330 core\n"
-		"\n"
-		"layout(location = 0) in vec4 position;"
-		"\n"
-		"void main()\n"
-		"{\n"
-		"	gl_Position = position;\n"
-		"}\n";
-
-	std::string fragmentShader =
-		"#version 330 core\n"
-		"\n"
-		"layout(location = 0) out vec4 color;"
-		"\n"
-		"void main()\n"
-		"{\n"
-		"	color = vec4(0.1, 0.0, 0.0, 0.1);\n"
-		"}\n";
-	
-	unsigned int shader = CreateShader(vertexShader, fragmentShader);
-	glUseProgram(shader);
 
 	//Set all the atributes and flags for our Gui window
 	const char* glsl_version = "#version 130";
@@ -83,8 +34,6 @@ bool ModuleMenu::Start()
 	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;           // Enable Docking
 	io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;         // Enable Multi-Viewport / Platform Windows
 
-	ImGui::StyleColorsDark();
-
 	// When viewports are enabled we tweak WindowRounding/WindowBg so platform windows can look identical to regular ones.
 	ImGuiStyle& style = ImGui::GetStyle();
 	if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
@@ -92,6 +41,7 @@ bool ModuleMenu::Start()
 		style.WindowRounding = 7.0f;
 		style.Colors[ImGuiCol_WindowBg].w = 1.0f;
 	}
+
 	// Our state
 	show_demo_window = true;
 
@@ -141,10 +91,26 @@ update_status ModuleMenu::Update(float dt)
 		ImGui::ShowDemoWindow(&show_demo_window);
 	{
 		ImGui::Begin("DEMO");
-		ImGui::Checkbox("Demo Window", &show_demo_window);
-
-		ImGui::End();
+		ImGui::Checkbox("Demo Window", &show_demo_window);		
 	}
 
 	return UPDATE_CONTINUE;
+}
+
+void ModuleMenu::Render()
+{
+	ImGui::End();
+
+	ImGui::Render();
+	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+	ImGuiIO& io = ImGui::GetIO();
+	if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+	{
+		SDL_Window* backup_current_window = SDL_GL_GetCurrentWindow();
+		SDL_GLContext backup_current_context = SDL_GL_GetCurrentContext();
+		ImGui::UpdatePlatformWindows();
+		ImGui::RenderPlatformWindowsDefault();
+		SDL_GL_MakeCurrent(backup_current_window, backup_current_context);
+	}
 }

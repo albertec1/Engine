@@ -1,18 +1,10 @@
 #include "Application.h"
 #include "ModuleRenderer3D.h"
 
-#include "Dependencies/glew/include/GL/glew.h"
-#include "Dependencies/SDL/include/SDL_opengl.h"
-
-#include "Dependencies/ImGUI/imgui.h"
-#include "Dependencies/ImGUI/imgui_internal.h"
-#include "Dependencies/ImGUI/imgui_impl_sdl.h"
-#include "Dependencies/ImGUI/imgui_impl_opengl3.h"
-
-#include <gl/GL.h>
-#include <gl/GLU.h>
-
 #include <iostream>
+
+#include "ImGui.h"
+#include "OpenGl.h"
 
 #pragma comment (lib, "glu32.lib")    /* link OpenGL Utility lib     */
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
@@ -82,7 +74,13 @@ bool ModuleRenderer3D::Init()
 		ret = false;
 	}
 	
-	SDL_GL_MakeCurrent(App->window->window, gl_context);
+	GLenum error = glewInit();
+
+	if (error != GL_NO_ERROR)
+	{
+		LOG("Error initializing glew library! %s", SDL_GetError());
+		ret = false;
+	}
 
 	if(ret == true)
 	{
@@ -94,9 +92,23 @@ bool ModuleRenderer3D::Init()
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
 
-		//Check for error
+		//Check for error..1
 		GLenum error = glGetError();
 		if(error != GL_NO_ERROR)
+		{
+			LOG("Error initializing OpenGL! %s\n", gluErrorString(error));
+			ret = false;
+		}
+
+
+
+		//Initialize Modelview Matrix
+		glMatrixMode(GL_MODELVIEW);
+		glLoadIdentity();
+
+		//Check for error..2
+		error = glGetError();
+		if (error != GL_NO_ERROR)
 		{
 			LOG("Error initializing OpenGL! %s\n", gluErrorString(error));
 			ret = false;
@@ -106,17 +118,17 @@ bool ModuleRenderer3D::Init()
 		glClearDepth(1.0f);
 		
 		//Initialize clear color
-		bg_color = { 0.45f, 0.55f, 0.60f, 1.00f };
-		glClearColor(bg_color.at(0), bg_color.at(1), bg_color.at(2), bg_color.at(3));
+		glClearColor(0.45f, 0.55f, 0.60f, 1.00f);
+		glClear(GL_COLOR_BUFFER_BIT);
 
-		//Check for error
+		//Check for error..3
 		error = glGetError();
-		if(error != GL_NO_ERROR)
+		if (error != GL_NO_ERROR)
 		{
 			LOG("Error initializing OpenGL! %s\n", gluErrorString(error));
 			ret = false;
 		}
-		
+
 		GLfloat LightModelAmbient[] = {0.0f, 0.0f, 0.0f, 1.0f};
 		glLightModelfv(GL_LIGHT_MODEL_AMBIENT, LightModelAmbient);
 		
@@ -125,6 +137,7 @@ bool ModuleRenderer3D::Init()
 		lights[0].diffuse.Set(0.75f, 0.75f, 0.75f, 1.0f);
 		lights[0].SetPos(0.0f, 0.0f, 2.5f);
 		lights[0].Init();
+		lights[0].Active(true);
 		
 		GLfloat MaterialAmbient[] = {1.0f, 1.0f, 1.0f, 1.0f};
 		glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, MaterialAmbient);
@@ -166,13 +179,13 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 	return UPDATE_CONTINUE;
 }
 
-update_status ModuleRenderer3D::Update(float dt)
-{
-	
-	glDrawArrays(GL_TRIANGLES, 0, 3);
-	
-	return UPDATE_CONTINUE;
-}
+//update_status ModuleRenderer3D::Update(float dt)
+//{
+//	
+//	glDrawArrays(GL_TRIANGLES, 0, 3);
+//	
+//	return UPDATE_CONTINUE;
+//}
 
 // PostUpdate present buffer to screen
 update_status ModuleRenderer3D::PostUpdate(float dt)
@@ -180,32 +193,14 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	SDL_Window* backup_current_window = SDL_GL_GetCurrentWindow();
 	SDL_GLContext backup_current_context = SDL_GL_GetCurrentContext();
 	SDL_GL_MakeCurrent(backup_current_window, backup_current_context);
-
-//IM_GUI RENDER ///////////////////////////////////////////////////////////
-	ImGuiIO& io = ImGui::GetIO(); (void)io;
-	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;       // Enable Keyboard Controls
-	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;           // Enable Docking
-	io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;         // Enable Multi-Viewport / Platform Windows
-
 	
-	//Render
-	ImGui::Render();
-	glViewport(0, 0, (int)io.DisplaySize.x, (int)io.DisplaySize.y);
-	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+	//glViewport(0, 0, (int)io.DisplaySize.x, (int)io.DisplaySize.y);
 
-	// Update and Render additional Platform Windows
-	if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
-	{
-		SDL_Window* backup_current_window = SDL_GL_GetCurrentWindow();
-		SDL_GLContext backup_current_context = SDL_GL_GetCurrentContext();
-		ImGui::UpdatePlatformWindows();
-		ImGui::RenderPlatformWindowsDefault();
-		SDL_GL_MakeCurrent(backup_current_window, backup_current_context);
-	}
-/////////////////////////////////////
+	//ImGui Render
+	App->menu->Render();
 
-	
 	SDL_GL_SwapWindow(App->window->window);
+
 	return UPDATE_CONTINUE;
 }
 

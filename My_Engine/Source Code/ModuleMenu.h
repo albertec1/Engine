@@ -14,6 +14,7 @@ public:
 	update_status Update(float dt) override;
 	bool CleanUp() override;
 
+	void Render();
 public:
 	bool show_demo_window;
 };

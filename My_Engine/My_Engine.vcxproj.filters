@@ -23,6 +23,9 @@
     <Filter Include="Source Code\Dependencies\Assimp">
       <UniqueIdentifier>{5524385b-85e4-4e31-a0b5-3fdbca772b56}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Code\Tools">
+      <UniqueIdentifier>{3aa83911-4af4-4f9c-9c62-0b695cae4ff9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Application.cpp">
@@ -191,6 +194,12 @@
     </ClInclude>
     <ClInclude Include="Source Code\Improter.h">
       <Filter>Source Code</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\OpenGl.h">
+      <Filter>Source Code\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\ImGui.h">
+      <Filter>Source Code\Tools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
