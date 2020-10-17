@@ -1,9 +1,7 @@
 #include "Application.h"
 #include "ModuleWindow.h"
-#include "Dependencies/glew/include/GL/glew.h"
-#include "Dependencies/SDL/include/SDL_opengl.h"
-#include <gl/GL.h>
-#include <gl/GLU.h>
+
+#include "OpenGl.h"
 
 ModuleWindow::ModuleWindow(Application* app, bool start_enabled) : Module(app, start_enabled)
 {

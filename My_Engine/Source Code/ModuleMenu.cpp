@@ -23,7 +23,6 @@ bool ModuleMenu::Start()
 {
 	LOG("Init Editor");
 
-
 	//Set all the atributes and flags for our Gui window
 	const char* glsl_version = "#version 130";
 
