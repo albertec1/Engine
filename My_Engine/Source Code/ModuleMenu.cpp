@@ -1,13 +1,7 @@
 #include "Application.h"
 #include "ModuleMenu.h"
 
-#include "Dependencies/ImGUI/imgui.h"
-#include "Dependencies/ImGUI/imgui_internal.h"
-#include "Dependencies/ImGUI/imgui_impl_sdl.h"
-#include "Dependencies/ImGUI/imgui_impl_opengl3.h"
-		  
-#include "Dependencies/glew/include/GL/glew.h"
-#include "Dependencies/SDL/include/SDL_opengl.h"
+#include "ImGui.h"	
 
 
 ModuleMenu::ModuleMenu(Application* app, bool start_enabled) : Module(app, start_enabled)

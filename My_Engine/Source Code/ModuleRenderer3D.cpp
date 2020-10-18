@@ -153,7 +153,6 @@ bool ModuleRenderer3D::Init()
 	// Projection matrix for
 	OnResize(SCREEN_WIDTH, SCREEN_HEIGHT);
 
-	
 	return ret;
 }
 
@@ -174,56 +173,69 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 	for(uint i = 0; i < MAX_LIGHTS; ++i)
 		lights[i].Render();
 
+	//DIRECT MODE TRIANGLE EXAMPLE//JUST TO CHECK IT IS WORKING PROPERLY
+	//glLineWidth(2.0f);
+	//glBegin(GL_TRIANGLES);
+	//
+	//glVertex3f(-5.f, 1.f, 0.f);
+	//glVertex3f( 5.f, 1.f, 0.f);
+	//glVertex3f( 0.f, 6.f, 0.f);
+
+	//glEnd();
+	//glLineWidth(1.0f);
+	//////
+
 	return UPDATE_CONTINUE;
 }
 
-//update_status ModuleRenderer3D::Update(float dt)
-//{
-//	
-//	glDrawArrays(GL_TRIANGLES, 0, 3);
-//	
+update_status ModuleRenderer3D::Update(float dt)
+{
+	
+	glDrawArrays(GL_TRIANGLES, 0, 3);
+	
 //EXAMPLE////////////////////////
-//
-//float pArr[6]{
-//-0.5f, -0.5f,
-// 0.0f,  0.5f,
-// 0.5f, -0.5f
-//};
-//
-//positions = pArr;
-//
-//glGenBuffers(1, &buffer);
-//glBindBuffer(GL_ARRAY_BUFFER, buffer);
-//glBufferData(GL_ARRAY_BUFFER, sizeof(byte) * 6, positions, GL_STATIC_DRAW);
-//
-//glEnableVertexAttribArray(0);
-//glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0);
-//
-//std::string vertexShader =
-//"#version 330 core\n"
-//"\n"
-//"layout(location = 0) in vec4 position;"
-//"\n"
-//"void main()\n"
-//"{\n"
-//"	gl_Position = position;\n"
-//"}\n";
-//
-//std::string fragmentShader =
-//"#version 330 core\n"
-//"\n"
-//"layout(location = 0) out vec4 color;"
-//"\n"
-//"void main()\n"
-//"{\n"
-//"	color = vec4(0.1, 0.0, 0.0, 0.1);\n"
-//"}\n";
-//
-//unsigned int shader = CreateShader(vertexShader, fragmentShader);
-//glUseProgram(shader);
 
-//	return UPDATE_CONTINUE;
-//}
+	float pArr[6]
+	{
+		-0.5f, -0.5f,
+	     0.0f,  0.5f,
+		 0.5f, -0.5f
+	};
+
+	positions = pArr;
+
+	glGenBuffers(1, &buffer);
+	glBindBuffer(GL_ARRAY_BUFFER, buffer);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(byte) * 6, positions, GL_STATIC_DRAW);
+
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0);
+
+	std::string vertexShader =
+		"#version 330 core\n"
+		"\n"
+		"layout(location = 0) in vec4 position;"
+		"\n"
+		"void main()\n"
+		"{\n"
+		"	gl_Position = position;\n"
+		"}\n";
+
+	std::string fragmentShader =
+		"#version 330 core\n"
+		"\n"
+		"layout(location = 0) out vec4 color;"
+		"\n"
+		"void main()\n"
+		"{\n"
+		"color = vec4(0.1, 0.0, 0.0, 0.1);\n"
+		"}\n";
+
+	unsigned int shader = CreateShader(vertexShader, fragmentShader);
+	glUseProgram(shader);
+
+	return UPDATE_CONTINUE;
+}
 
 // PostUpdate present buffer to screen
 update_status ModuleRenderer3D::PostUpdate(float dt)
