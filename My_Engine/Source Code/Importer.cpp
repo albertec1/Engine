@@ -1,4 +1,5 @@
-#include "Improter.h"
+#include "Globals.h"
+#include "Importer.h"
 #include "Dependencies/Assimp/include/cimport.h"
 #include "Dependencies/Assimp/include/scene.h"
 #include "Dependencies/Assimp/include/postprocess.h"

@@ -94,7 +94,7 @@
     <ClCompile Include="Source Code\Dependencies\ImGui\imgui_widgets.cpp">
       <Filter>Source Code\Dependencies\ImGui</Filter>
     </ClCompile>
-    <ClCompile Include="Improter.cpp">
+    <ClCompile Include="Source Code\Importer.cpp">
       <Filter>Source Code</Filter>
     </ClCompile>
   </ItemGroup>
@@ -192,14 +192,14 @@
     <ClInclude Include="Source Code\Dependencies\Assimp\include\scene.h">
       <Filter>Source Code\Dependencies\Assimp</Filter>
     </ClInclude>
-    <ClInclude Include="Source Code\Improter.h">
-      <Filter>Source Code</Filter>
-    </ClInclude>
     <ClInclude Include="Source Code\OpenGl.h">
       <Filter>Source Code\Tools</Filter>
     </ClInclude>
     <ClInclude Include="Source Code\ImGui.h">
       <Filter>Source Code\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\Importer.h">
+      <Filter>Source Code</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
