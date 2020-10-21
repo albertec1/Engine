@@ -153,6 +153,7 @@ bool ModuleRenderer3D::Init()
 	// Projection matrix for
 	OnResize(SCREEN_WIDTH, SCREEN_HEIGHT);
 
+
 	return ret;
 }
 
@@ -249,9 +250,6 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 // Called before quitting
 bool ModuleRenderer3D::CleanUp()
 {
-	//Assimp// detach log stream
-	aiDetachAllLogStreams();
-	//
 	
 	LOG("Destroying 3D Renderer");
 

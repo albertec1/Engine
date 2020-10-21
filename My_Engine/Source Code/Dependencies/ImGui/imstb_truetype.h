@@ -1871,7 +1871,7 @@ typedef struct
    stbtt_int32 min_x, max_x, min_y, max_y;
 
    stbtt_vertex *pvertices;
-   int num_vertices;
+   int num_vertex;
 } stbtt__csctx;
 
 #define STBTT__CSCTX_INIT(bounds) {bounds,0, 0,0, 0,0, 0,0,0,0, NULL, 0}
@@ -1894,11 +1894,11 @@ static void stbtt__csctx_v(stbtt__csctx *c, stbtt_uint8 type, stbtt_int32 x, stb
          stbtt__track_vertex(c, cx1, cy1);
       }
    } else {
-      stbtt_setvertex(&c->pvertices[c->num_vertices], type, x, y, cx, cy);
-      c->pvertices[c->num_vertices].cx1 = (stbtt_int16) cx1;
-      c->pvertices[c->num_vertices].cy1 = (stbtt_int16) cy1;
+      stbtt_setvertex(&c->pvertices[c->num_vertex], type, x, y, cx, cy);
+      c->pvertices[c->num_vertex].cx1 = (stbtt_int16) cx1;
+      c->pvertices[c->num_vertex].cy1 = (stbtt_int16) cy1;
    }
-   c->num_vertices++;
+   c->num_vertex++;
 }
 
 static void stbtt__csctx_close_shape(stbtt__csctx *ctx)
@@ -2240,11 +2240,11 @@ static int stbtt__GetGlyphShapeT2(const stbtt_fontinfo *info, int glyph_index, s
    stbtt__csctx count_ctx = STBTT__CSCTX_INIT(1);
    stbtt__csctx output_ctx = STBTT__CSCTX_INIT(0);
    if (stbtt__run_charstring(info, glyph_index, &count_ctx)) {
-      *pvertices = (stbtt_vertex*)STBTT_malloc(count_ctx.num_vertices*sizeof(stbtt_vertex), info->userdata);
+      *pvertices = (stbtt_vertex*)STBTT_malloc(count_ctx.num_vertex*sizeof(stbtt_vertex), info->userdata);
       output_ctx.pvertices = *pvertices;
       if (stbtt__run_charstring(info, glyph_index, &output_ctx)) {
-         STBTT_assert(output_ctx.num_vertices == count_ctx.num_vertices);
-         return output_ctx.num_vertices;
+         STBTT_assert(output_ctx.num_vertex == count_ctx.num_vertex);
+         return output_ctx.num_vertex;
       }
    }
    *pvertices = NULL;
@@ -2259,7 +2259,7 @@ static int stbtt__GetGlyphInfoT2(const stbtt_fontinfo *info, int glyph_index, in
    if (y0)  *y0 = r ? c.min_y : 0;
    if (x1)  *x1 = r ? c.max_x : 0;
    if (y1)  *y1 = r ? c.max_y : 0;
-   return r ? c.num_vertices : 0;
+   return r ? c.num_vertex : 0;
 }
 
 STBTT_DEF int stbtt_GetGlyphShape(const stbtt_fontinfo *info, int glyph_index, stbtt_vertex **pvertices)

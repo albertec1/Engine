@@ -201,6 +201,9 @@
     <ClInclude Include="Source Code\Importer.h">
       <Filter>Source Code</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\Assimp.h">
+      <Filter>Source Code\Tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Notes on openGL.txt" />

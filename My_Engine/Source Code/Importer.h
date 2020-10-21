@@ -36,9 +36,14 @@ private:
         bool Init(const std::vector<int>& Vertices,
             const std::vector<int>& Indices);
 
-        GLuint VB; //vertex buffer
-        GLuint IB; //index buffer
-        unsigned int NumIndices;
+        uint id_index = 0; // index in VRAM
+        uint num_index = 0;
+        uint* index = nullptr;
+
+        uint id_vertex = 0; // unique vertex in VRAM
+        uint num_vertex = 0;
+        float* vertex = nullptr;
+
         unsigned int MaterialIndex; //For now, a material is simply a texture and since mesh entries can share materials, 
                                     //we have a separate vector for them (m_Textures).
                                     //MeshEntry::MaterialIndex points into one of the textures in m_Textures.

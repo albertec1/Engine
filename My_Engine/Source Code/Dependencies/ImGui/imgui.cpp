@@ -749,9 +749,9 @@ CODE
 #ifndef WIN32_LEAN_AND_MEAN
 #define WIN32_LEAN_AND_MEAN
 #endif
-#ifndef NOMINMAX
-#define NOMINMAX
-#endif
+//#ifndef NOMINMAX //hi, I commented this because it created conflict with material.ini of Assimp 
+//#define NOMINMAX
+//#endif
 #ifndef __MINGW32__
 #include <Windows.h>        // _wfopen, OpenClipboard
 #else
