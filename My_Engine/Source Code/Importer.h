@@ -28,7 +28,7 @@ private:
 
 #define INVALID_MATERIAL 0xFFFFFFFF
 
-    struct MeshEntry {
+    struct MeshEntry { //Each struct corresponds to one mesh structure in the aiScene object.
         MeshEntry();
 
         ~MeshEntry();
@@ -36,14 +36,16 @@ private:
         bool Init(const std::vector<int>& Vertices,
             const std::vector<int>& Indices);
 
-        GLuint VB;
-        GLuint IB;
+        GLuint VB; //vertex buffer
+        GLuint IB; //index buffer
         unsigned int NumIndices;
-        unsigned int MaterialIndex;
+        unsigned int MaterialIndex; //For now, a material is simply a texture and since mesh entries can share materials, 
+                                    //we have a separate vector for them (m_Textures).
+                                    //MeshEntry::MaterialIndex points into one of the textures in m_Textures.
     };
 
-    std::vector<uint> m_Entries;
-    std::vector<uint> m_Textures;
+    std::vector<uint> m_Entries; //MeshEntries vector. 
+    std::vector<uint> m_Textures; //Texturs vector. These textures can be shared between MeshEntries using the texture index.
 };
 
 

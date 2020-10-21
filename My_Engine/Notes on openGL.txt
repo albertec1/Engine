@@ -1,4 +1,6 @@
 
+// Intro OpenGL //
+
 Vertex Buffer --> Just a memory buffer, a block of memory where we can put data.
 The difference is that the buffer is in OpenGL so the data is saved in the GPU.
 
@@ -10,10 +12,107 @@ OpenGl to draw the triangle.
 A vertex is not a position. A vertex can contain a lot more than just a position:
 texture coordinates, normals, colors, binormals, tangents, etc...
 
+There are two ways of rendering with arrays of vertices. You can generate a stream in the array's order,
+or you can use a list of indices to define the order. The indices control what order the vertices are received in,
+and indices can specify the same array element more than once.
+
+Let's say you have the following array of arrays containing 3d position data belonging to 3 vertices:
+ { {1, 1, 1}, {0, 0, 0}, {0, 0, 1} }
+
+If you use the above array as a stream, OpenGL will receive and process these three vertices in order (left-to-right). However, you can also specify another list of indices that will select which vertices to use and in which order.
+
+Let's say we have the following index list:
+ {2, 1, 0, 2, 1, 2}
+
+If we render with the above attribute array, but selected by the index list, OpenGL will receive the following stream of vertex attribute data:
+ { {0, 0, 1}, {0, 0, 0}, {1, 1, 1}, {0, 0, 1}, {0, 0, 0}, {0, 0, 1} }
+
 Vertex attributes specify some information about the vertex for opengl to know how to
 interprete it.
 
 Vertex shaders and fragment/pixel shaders are the more common type of shaders.
+
+// Assimp // Mesh topic //
+
+every scene/ game object has a mesh.
+This mesh can contain: 	- mVertices[]
+						- mNormals[]
+						- mTextureCoords[]
+						- mFaces[] (triangles basicaly)
+						- mMaterialIndex
+						- mOtherThings i guess...
+
+Before loading any mesh, we have to store it.
+Simple struct containing vertex data:
+
+		uint id_index = 0; // index in VRAM
+		uint num_index = 0;
+		uint* index = nullptr;
+
+		uint id_vertex = 0; // unique vertex in VRAM
+		uint num_vertex = 0;
+		float* vertex = nullptr;
+
+Loading Geometry from a file with assimp:
+
+//import the scene from a file
+const aiScene* scene = aiImportFile(file_path, aiProcessPreset_TargetRealtime_MaxQuality);
+
+//Make sure the scene was loaded correctly
+if (scene != nullptr && Scene->HasMeshes())
+{
+	// Use scene->mNumMeshes to iterate on scene->mMeshes array
+	for(int i = 0; i < scene->mNumMeshes; i++)
+	{
+	// missing the selection of the corresponding ai mesh
+		// copy vertices
+		ourMesh.num_vertices = aiMesh->mNumVertices;
+		// create a float array with 3 times the size of the number of vertices of the mesh
+		ourMesh.vertices = new float[ourMesh.num_vertices * 3];
+		// store into the previously created array the content of the vertices array of the mesh we are loading
+		memcpy(ourMesh.vertices, aiMesh->mVertices, sizeiof(float) * ourMesh.num_vertices * 3);
+		LOG("New mesh added with %d vertices", m.num_vertices);
+
+		//copy faces
+		if (aiMesh->HasFaces())
+		{
+			//copy number of indices
+			ourMesh.num_indices = aiMesh->mNumFaces * 3; 
+			//create an array with the size of the number of indices
+			ourMesh.indices = new uint[m.num_indices]; 
+			//for each face
+			for (uint i = 0; i < aiMesh->mNumFaces; ++i) 
+			{
+				if(aiMesh->mFaces[i].mNumIndices != 3)
+					LOG("WARNING, geometry face with != 3 indices!"); 
+			//that contains 3 indices	
+				else 
+				{
+			//copy the 3 face indices into our indices array
+					memcpy(&m.indices[i*3], new_mesh->mFaces[i].mIndices, 3 * sizeof(uint));
+				}
+			}
+		}
+
+	}
+
+	aiReleaseImport(scene);
+}
+else 
+	LOG("Error loading scene %s", file_path);
+
+Once the array has the information of the meshes we have to draw:
+	- Generate a new buffer for each mesh and send the data to the VRAM
+	(look for info about opengl buffers and its methods)
+	- Make a Draw() method in the render module that receives a mesh and draws it
+	(Tutorials?)
+	- Loop all the meshes and draw them
+	(Scene?)
+	- We are using indices so glDrawElements() is the appropiate function to draw
+	(info about glDrawElements())
+
+
+// Shaders //
 
 Draw Call -(things)-> vertex shader -(things)-> fragment shader --> pixels in screen
 
@@ -33,6 +132,3 @@ once for every pixel we have to rasterize.
 
 Keep in mind fragment shader is called a lot of times. Do as many operations as possible 
 outside of this stage!!
-
-
-

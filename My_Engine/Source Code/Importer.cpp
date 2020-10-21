@@ -8,4 +8,37 @@
 
 #include <cmath>
 
+Mesh::Mesh()
+{
+}
 
+Mesh::~Mesh()
+{
+}
+
+bool Mesh::LoadMesh(const std::string& Filename)
+{
+	return false;
+}
+
+void Mesh::Render()
+{
+}
+
+bool Mesh::InitFromScene(const aiScene* pScene, const std::string& Filename)
+{
+	return false;
+}
+
+void Mesh::InitMesh(unsigned int Index, const aiMesh* paiMesh)
+{
+}
+
+bool Mesh::InitMaterials(const aiScene* pScene, const std::string& Filename)
+{
+	return false;
+}
+
+void Mesh::Clear()
+{
+}
