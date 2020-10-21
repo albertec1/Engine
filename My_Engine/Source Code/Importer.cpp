@@ -24,6 +24,9 @@ bool Mesh::LoadMesh(const std::string& Filename)
 	const char* file_path = Filename.c_str(); //I use c_str here to prevent accessing weird places if Filename gets deleted or something before getting to this point.
 	const aiScene* scene = aiImportFile(file_path, aiProcessPreset_TargetRealtime_MaxQuality);
 	
+	/*Assimp::Importer Importer; //what is this? Could it be a better implementation?
+	const aiScene* pScene = Importer.ReadFile(Filename.c_str(), aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_JoinIdenticalVertices);*/
+
 	//Make sure the scene was loaded correctly
 	if (scene != nullptr && scene->HasMeshes())
 	{
@@ -75,6 +78,8 @@ bool Mesh::LoadMesh(const std::string& Filename)
 
 void Mesh::Render()
 {
+	//render no va aqui
+	//mirar que hace falta exctamente que ha de retornar el importer para que render pueda pintar las meshes.
 }
 
 bool Mesh::InitFromScene(const aiScene* pScene, const std::string& Filename)
