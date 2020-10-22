@@ -4,8 +4,11 @@
 #include "glmath.h"
 #include "Light.h"
 #include <vector>
+#include <string>
 
 #define MAX_LIGHTS 8
+
+struct MeshEntry;
 
 class ModuleRenderer3D : public Module
 {
@@ -20,6 +23,8 @@ public:
 	bool CleanUp();
 
 	void OnResize(int width, int height);
+	void LoadModel(const std::string& filename);
+	void Draw(MeshEntry* mesh);
 
 public:
 
@@ -29,8 +34,10 @@ public:
 	mat3x3 NormalMatrix;
 	mat4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
 
- //Testinng variables/////
-	float *positions;
-	unsigned int buffer;
+	std::vector<uint> mesh_array;
+
+ ////Testinng variables/////
+	//float *positions;
+	//unsigned int buffer;
 
 };
