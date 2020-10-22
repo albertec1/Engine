@@ -11,7 +11,7 @@
 #include "ModuleCamera3D.h"
 #include "ModulePhysics3D.h"
 #include "ModuleMenu.h" 
-//#include "Improter.h"
+#include "Importer.h"
 
 #include <list>
 
@@ -26,6 +26,7 @@ public:
 	ModuleRenderer3D* renderer3D;
 	ModuleCamera3D* camera;
 	ModulePhysics3D* physics;
+	Importer* imp;
 
 
 private:

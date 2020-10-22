@@ -1,5 +1,6 @@
 #include "Application.h"
 #include "ModuleRenderer3D.h"
+#include "Importer.h"
 
 #include <iostream>
 
@@ -174,6 +175,9 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 	for(uint i = 0; i < MAX_LIGHTS; ++i)
 		lights[i].Render();
 
+	//loop de la lista de modelos y Draw()
+	//glDrawElements(GL_TRIANGLES, m_Entries[i].NumIndices, GL_UNSIGNED_INT, 0);
+
 //DIRECT MODE TRIANGLE EXAMPLE//JUST TO CHECK IT IS WORKING PROPERLY
 	//glLineWidth(2.0f);
 	//glBegin(GL_TRIANGLES);
@@ -242,6 +246,7 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	//ImGui Render
 	App->menu->Render();
 
+	
 	SDL_GL_SwapWindow(App->window->window);
 
 	return UPDATE_CONTINUE;
@@ -270,4 +275,21 @@ void ModuleRenderer3D::OnResize(int width, int height)
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+}
+
+void ModuleRenderer3D::LoadModel(const std::string& filename)
+{
+	Importer imp;
+	if (imp.LoadScene(filename, mesh_array) == true)
+	{
+		for (int i = 0; i < mesh_array.size(); i++)
+		{
+			//añadir modelo a la lista de modelos
+		}
+	}
+}
+
+void ModuleRenderer3D::Draw(MeshEntry* mesh)
+{
+
 }
