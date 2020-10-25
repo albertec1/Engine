@@ -111,6 +111,19 @@ Once the array has the information of the meshes we have to draw:
 	- We are using indices so glDrawElements() is the appropiate function to draw
 	(info about glDrawElements())
 
+Our importer configuration:
+
+// Data loading ////
+Importer::LoadScene(filename, meshes_array) --> Creates a scene from a file and looks
+for meshes. Then calls ImportMesh() to load them into a MeshEntry.
+	
+	--> Importer::ImportMesh(scene, i, meshes_array) --> loads four buffers/arrays:
+		Vertices, Indices, Normals and Tex.Coords into a meshEntry and adds	it into
+		the meshes array.
+
+// OpenGL setUp for the mesh rendering ////
+ModuleRender3D::LoadBuffer(Mesh*) --> Generates and binds an openGl buffer for every 
+mesh buffer (Vertices, Indices, Normals and Tex.Coords).
 
 // Shaders //
 

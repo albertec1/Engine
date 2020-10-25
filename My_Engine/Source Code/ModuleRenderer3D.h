@@ -23,8 +23,8 @@ public:
 	bool CleanUp();
 
 	void OnResize(int width, int height);
-	void LoadModel(const std::string& filename);
-	void Draw(MeshEntry* mesh);
+	MeshEntry* LoadModel(const std::string& filename);
+	
 
 public:
 
@@ -34,7 +34,13 @@ public:
 	mat3x3 NormalMatrix;
 	mat4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
 
-	std::vector<uint> mesh_array;
+	std::vector<MeshEntry*> mesh_array;
+
+private:
+
+	void LoadBuffer(MeshEntry* buffer);
+	void DrawMesh(MeshEntry* mesh);
+	void DrawAllMeshes();
 
  ////Testinng variables/////
 	//float *positions;

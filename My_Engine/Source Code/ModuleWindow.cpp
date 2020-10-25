@@ -3,6 +3,7 @@
 
 #include "OpenGl.h"
 
+
 ModuleWindow::ModuleWindow(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 	window = NULL;
@@ -72,6 +73,11 @@ bool ModuleWindow::Init()
 			//Get window surface
 			screen_surface = SDL_GetWindowSurface(window);
 		}
+
+		LOG("Vendor: %s", glGetString(GL_VENDOR));
+		LOG("Renderer: %s", glGetString(GL_RENDERER));
+		LOG("OpenGL version supported %s", glGetString(GL_VERSION));
+		LOG("GLSL: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
 	}
 
 	return ret;
