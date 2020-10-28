@@ -26,6 +26,9 @@
     <Filter Include="Source Code\Tools">
       <UniqueIdentifier>{3aa83911-4af4-4f9c-9c62-0b695cae4ff9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Code\Window">
+      <UniqueIdentifier>{89780085-36e3-4c72-b9db-5535215f7e8a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Application.cpp">
@@ -96,6 +99,12 @@
     </ClCompile>
     <ClCompile Include="Source Code\Importer.cpp">
       <Filter>Source Code</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\Window.cpp">
+      <Filter>Source Code\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\Win_Inspector.cpp">
+      <Filter>Source Code\Window</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -203,6 +212,12 @@
     </ClInclude>
     <ClInclude Include="Source Code\Assimp.h">
       <Filter>Source Code\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\Window.h">
+      <Filter>Source Code\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\Win_Inspector.h">
+      <Filter>Source Code\Window</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

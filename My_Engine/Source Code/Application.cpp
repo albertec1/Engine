@@ -99,6 +99,12 @@ update_status Application::Update()
 	}
 
 	FinishUpdate();
+
+	if (exit)
+	{
+		ret = update_status::UPDATE_STOP;
+	}
+
 	return ret;
 }
 
@@ -121,4 +127,9 @@ void Application::AddModule(Module* mod)
 void Application::OpenBrowser(const char* url) const
 {
 	ShellExecuteA(NULL, "open", url, NULL, NULL, SW_SHOWNORMAL);
+}
+
+void Application::Exit()
+{
+	exit = true;
 }

@@ -3,10 +3,16 @@
 
 #include "ImGui.h"	
 
+#include "Window.h"
+#include "Win_Inspector.h"
+
+
 
 ModuleMenu::ModuleMenu(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
+	inspector = new Win_Inspector(false);
 
+	AddWindow(inspector);
 }
 
 ModuleMenu::~ModuleMenu()
@@ -47,6 +53,10 @@ bool ModuleMenu::Start()
 
 bool ModuleMenu::CleanUp()
 {
+	std::vector<Window*>::iterator item = winArray.begin();
+	for (item; item != winArray.end(); ++item)
+		(*item)->CleanUp();
+
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplSDL2_Shutdown();
 	ImGui::DestroyContext();
@@ -62,12 +72,25 @@ update_status ModuleMenu::Update(float dt)
 	ImGui_ImplSDL2_NewFrame(App->window->window);
 	ImGui::NewFrame();
 
+
 	//Top bar menu, with an option to close the editor
 	if (ImGui::BeginMainMenuBar())
 	{
 		if (ImGui::BeginMenu("Options"))
 		{
-			if (ImGui::MenuItem("Close", "Alt+F4")) { return UPDATE_STOP; }
+			if (ImGui::MenuItem("Close", "Alt+F4"))
+			{
+				App->Exit();
+			}
+
+			ImGui::EndMenu();
+		}
+		if (ImGui::BeginMenu("Windows"))
+		{
+			if (ImGui::MenuItem("Inspector", " ", inspector->active))
+			{ 
+				inspector->SetActive();
+			}
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("Help"))
@@ -75,16 +98,16 @@ update_status ModuleMenu::Update(float dt)
 			if (ImGui::MenuItem("Gui Demo")) {}
 
 			if (ImGui::MenuItem("Documentation"))
-					App->OpenBrowser("https://github.com/albertec1/Yet-another-janky-Engine/wiki");
+				App->OpenBrowser("https://github.com/albertec1/Yet-another-janky-Engine/wiki");
 
 			if (ImGui::MenuItem("Download latest"))
-					App->OpenBrowser("https://github.com/albertec1/Yet-another-janky-Engine/releases");
+				App->OpenBrowser("https://github.com/albertec1/Yet-another-janky-Engine/releases");
 
 			if (ImGui::MenuItem("Report a bug"))
-					App->OpenBrowser("https://github.com/albertec1/Yet-another-janky-Engine/issues");
+				App->OpenBrowser("https://github.com/albertec1/Yet-another-janky-Engine/issues");
 
 			ImGui::EndMenu();
-			}
+		}
 		ImGui::EndMenuBar();
 		ImGui::End();
 	}
@@ -94,15 +117,33 @@ update_status ModuleMenu::Update(float dt)
 		ImGui::ShowDemoWindow(&show_demo_window);
 	{
 		ImGui::Begin("DEMO");
-		ImGui::Checkbox("Demo Window", &show_demo_window);		
+		ImGui::Checkbox("Demo Window", &show_demo_window);
 	}
 
+	std::vector<Window*>::iterator item = winArray.begin();
+
+	for (item; item != winArray.end(); ++item)
+	{
+		(*item)->Draw();
+	}
+	
+		
+
 	return UPDATE_CONTINUE;
+}
+
+
+void ModuleMenu::AddWindow(Window* window)
+{
+	winArray.push_back(window);
 }
 
 void ModuleMenu::Render()
 {
 	ImGui::End();
+
+	
+
 
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

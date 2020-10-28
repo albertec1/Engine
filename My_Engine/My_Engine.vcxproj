@@ -180,6 +180,8 @@
     <ClCompile Include="Source Code\ModuleWindow.cpp" />
     <ClCompile Include="Source Code\Primitive.cpp" />
     <ClCompile Include="Source Code\Timer.cpp" />
+    <ClCompile Include="Source Code\Window.cpp" />
+    <ClCompile Include="Source Code\Win_Inspector.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source Code\Application.h" />
@@ -217,6 +219,8 @@
     <ClInclude Include="Source Code\OpenGl.h" />
     <ClInclude Include="Source Code\Primitive.h" />
     <ClInclude Include="Source Code\Timer.h" />
+    <ClInclude Include="Source Code\Window.h" />
+    <ClInclude Include="Source Code\Win_Inspector.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Notes on openGL.txt" />

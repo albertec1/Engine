@@ -4,6 +4,9 @@
 #include "Module.h"
 #include "Globals.h"
 
+class Window;
+class Win_Inspector;
+
 class ModuleMenu : public Module
 {
 public:
@@ -14,9 +17,13 @@ public:
 	update_status Update(float dt) override;
 	bool CleanUp() override;
 
+	void AddWindow(Window* window);
 	void Render();
 public:
 	bool show_demo_window;
+
+	std::vector<Window*> winArray;
+	Win_Inspector* inspector = nullptr;
 };
 
 #endif //__ModuleEditor_H__

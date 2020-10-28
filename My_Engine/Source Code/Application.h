@@ -34,6 +34,7 @@ private:
 	Timer	ms_timer;
 	float	dt;
 	std::list<Module*> list_modules;
+	bool exit;
 
 public:
 
@@ -44,6 +45,7 @@ public:
 	update_status Update();
 	bool CleanUp();
 	void OpenBrowser(const char* url) const;
+	void Exit();
 
 private:
 
