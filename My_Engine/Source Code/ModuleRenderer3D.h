@@ -3,12 +3,11 @@
 #include "Globals.h"
 #include "glmath.h"
 #include "Light.h"
+#include "Importer.h"
 #include <vector>
 #include <string>
 
 #define MAX_LIGHTS 8
-
-struct MeshEntry;
 
 class ModuleRenderer3D : public Module
 {
@@ -18,7 +17,7 @@ public:
 
 	bool Init();
 	update_status PreUpdate(float dt);
-	update_status Update(float dt);
+//	update_status Update(float dt);
 	update_status PostUpdate(float dt);
 	bool CleanUp();
 
@@ -38,7 +37,7 @@ public:
 
 private:
 
-	void LoadBuffer(MeshEntry* buffer);
+	void LoadBuffer(MeshEntry* mesh, float* vertices, uint* indices);
 	void DrawMesh(MeshEntry* mesh);
 	void DrawAllMeshes();
 

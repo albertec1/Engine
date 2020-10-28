@@ -7,19 +7,29 @@
 class aiScene;
 class aiMesh;
 
+enum class BufferIndex
+{
+    VERTICES,
+    TEX_COORDINATES,
+    NORMALS
+};
+
 struct MeshEntry {
 
     uint id_index = 0; // index in VRAM
     uint num_indices = 0;
-    uint* indices = nullptr;
+    uint* indices;
+    //std::vector<uint> indices;
 
     uint id_vertex = 0; // unique vertex in VRAM
     uint num_vertices = 0;
-    float* vertices = nullptr;
+    float* vertices;
+   //std::vector<float*> vertices;
 
     float* normals = nullptr;
     uint num_normals = 0;
-
+    
+    
     float* texture_coords = nullptr;
     uint num_tex_coords = 0;
 
@@ -45,13 +55,13 @@ public:
 
     MeshEntry* ImportMesh(const aiScene* scene, int i);
     MeshEntry* LoadScene(const std::string& filename);
-    
+
+
 private:
     bool InitMaterials(const aiScene* pScene, const std::string& Filename); //for textures; not using this yet
     void Clear();
 
 #define INVALID_MATERIAL 0xFFFFFFFF
 
-    std::vector<uint> m_Entries; //MeshEntries vector. 
     std::vector<uint> m_Textures; //Texturs vector. These textures can be shared between MeshEntries using the texture index.
 };
