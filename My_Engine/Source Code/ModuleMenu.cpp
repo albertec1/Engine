@@ -73,8 +73,18 @@ update_status ModuleMenu::Update(float dt)
 		if (ImGui::BeginMenu("Help"))
 		{
 			if (ImGui::MenuItem("Gui Demo")) {}
+
+			if (ImGui::MenuItem("Documentation"))
+					App->OpenBrowser("https://github.com/albertec1/Yet-another-janky-Engine/wiki");
+
+			if (ImGui::MenuItem("Download latest"))
+					App->OpenBrowser("https://github.com/albertec1/Yet-another-janky-Engine/releases");
+
+			if (ImGui::MenuItem("Report a bug"))
+					App->OpenBrowser("https://github.com/albertec1/Yet-another-janky-Engine/issues");
+
 			ImGui::EndMenu();
-		}
+			}
 		ImGui::EndMenuBar();
 		ImGui::End();
 	}
