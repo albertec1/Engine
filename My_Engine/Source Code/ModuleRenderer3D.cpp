@@ -10,48 +10,6 @@
 #pragma comment (lib, "glu32.lib")    /* link OpenGL Utility lib     */
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
 
-//static unsigned int CompileShader(unsigned int type, const std::string& source)
-//{
-//	unsigned int id = glCreateShader(GL_VERTEX_SHADER);
-//	const char* src = source.c_str();
-//	glShaderSource(id, 1, &src, nullptr);
-//	glCompileShader(id);
-//
-//	int result;
-//	glGetShaderiv(id, GL_COMPILE_STATUS, &result);
-//	if (result == GL_FALSE)
-//	{
-//		int length;
-//		glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length);
-//		char* message = (char*)alloca(length * sizeof(char));
-//		glGetShaderInfoLog(id, length, &length, message);
-//		LOG("Failed to compile shader!");
-//		LOG(message);		
-//
-//		glDeleteShader(id);
-//		return 0;
-//	}
-//
-//	return id;
-//}
-//
-//static unsigned int CreateShader(const std::string& vertexShader, const std::string& fragmentShader)
-//{
-//	unsigned int program = glCreateProgram();
-//	unsigned int vs = CompileShader(GL_VERTEX_SHADER, vertexShader);
-//	unsigned int fs = CompileShader(GL_FRAGMENT_SHADER, fragmentShader);
-//
-//	glAttachShader(program, vs);
-//	glAttachShader(program, fs);
-//	glLinkProgram(program);
-//	glValidateProgram(program);
-//
-//	glDeleteShader(vs);
-//	glDeleteShader(fs);
-//
-//	return program;
-//}
-
 ModuleRenderer3D::ModuleRenderer3D(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 
@@ -157,7 +115,9 @@ bool ModuleRenderer3D::Init()
 	aiAttachLogStream(&stream);
 
 	//temporary till i figure ou where to put it
-	LoadModel("Models/BOX.fbx");
+	LoadModel("Assets/Models/BakerHouse.fbx");
+
+// Modern OpenGL square ////////////////////
 
 	//float positions[] = {
 	//	-0.5f, -0.5f,
@@ -209,10 +169,7 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 	for(uint i = 0; i < MAX_LIGHTS; ++i)
 		lights[i].Render();
 
-	//loop de la lista de modelos y Draw()
-	//glDrawElements(GL_TRIANGLES, m_Entries[i].NumIndices, GL_UNSIGNED_INT, 0);
-
-//DIRECT MODE TRIANGLE EXAMPLE//JUST TO CHECK IT IS WORKING PROPERLY
+	//DIRECT MODE TRIANGLE EXAMPLE//
 	//glLineWidth(2.0f);
 	//glBegin(GL_TRIANGLES);
 	//
@@ -222,60 +179,19 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 	//
 	//glEnd();
 	//glLineWidth(1.0f);
-	//////
+
 
 	return UPDATE_CONTINUE;
 }
 
-//update_status ModuleRenderer3D::Update(float dt)
-//{
-//	
-////EXAMPLE////////////////////////
-//	//float pArr[6]
-//	//{
-//	//	-0.5f, -0.5f,
-//	//     0.0f,  0.5f,
-//	//	 0.5f, -0.5f
-//	//};
-//	//positions = pArr;
-//	//glGenBuffers(1, &buffer);
-//	//glBindBuffer(GL_ARRAY_BUFFER, buffer);
-//	//glBufferData(GL_ARRAY_BUFFER, sizeof(byte) * 6, positions, GL_STATIC_DRAW);
-//	//glEnableVertexAttribArray(0);
-//	//glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0);
-//	//std::string vertexShader =
-//	//	"#version 330 core\n"
-//	//	"\n"
-//	//	"layout(location = 0) in vec4 position;"
-//	//	"\n"
-//	//	"void main()\n"
-//	//	"{\n"
-//	//	"	gl_Position = position;\n"
-//	//	"}\n";
-//	//std::string fragmentShader =
-//	//	"#version 330 core\n"
-//	//	"\n"
-//	//	"layout(location = 0) out vec4 color;"
-//	//	"\n"
-//	//	"void main()\n"
-//	//	"{\n"
-//	//	"color = vec4(0.1, 0.0, 0.0, 0.1);\n"
-//	//	"}\n";
-//	//unsigned int shader = CreateShader(vertexShader, fragmentShader);
-//	//glUseProgram(shader);
-//	//glDrawArrays(GL_TRIANGLES, 0, 3);
-//
-//
-//	return UPDATE_CONTINUE;
-//}
 
 // PostUpdate present buffer to screen
 update_status ModuleRenderer3D::PostUpdate(float dt)
 {
-	//SDL_Window* backup_current_window = SDL_GL_GetCurrentWindow();
-	//SDL_GLContext backup_current_context = SDL_GL_GetCurrentContext();
-	//SDL_GL_MakeCurrent(backup_current_window, backup_current_context);
-	//
+	SDL_Window* backup_current_window = SDL_GL_GetCurrentWindow();
+	SDL_GLContext backup_current_context = SDL_GL_GetCurrentContext();
+	SDL_GL_MakeCurrent(backup_current_window, backup_current_context);
+	
 	//glViewport(0, 0, (int)io.DisplaySize.x, (int)io.DisplaySize.y);
 
 	//glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
@@ -336,49 +252,39 @@ void ModuleRenderer3D::LoadBuffer(MeshEntry* mesh, float* vertices, uint* indice
 	glGenVertexArrays(1, &mesh->VAO);
 	glBindVertexArray(mesh->VAO);
 
-	if (mesh->num_vertices > 0)
-	{
-		glGenBuffers(1, (GLuint*)&mesh->b_vertices);
-		glBindBuffer(GL_ARRAY_BUFFER, mesh->b_vertices);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * mesh->num_vertices * 3, vertices, GL_STATIC_DRAW);
-	}
+	glGenBuffers(1, (GLuint*)&mesh->b_vertices);
+	glBindBuffer(GL_ARRAY_BUFFER, mesh->b_vertices);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * mesh->num_vertices * 3, vertices, GL_STATIC_DRAW);
+	
+	glGenBuffers(1, (GLuint*)&mesh->b_indices);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->b_indices);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * mesh->num_indices, indices, GL_STATIC_DRAW);
 
-	if (mesh->num_indices > 0)
-	{
-		glGenBuffers(1, (GLuint*)&mesh->b_indices);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->b_indices);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * mesh->num_indices, indices, GL_STATIC_DRAW);
-		
-	}
-
-	glEnableVertexAttribArray((uint)BufferIndex::VERTICES);
 	glVertexAttribPointer((uint)BufferIndex::VERTICES, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray((uint)BufferIndex::VERTICES);
 
+	if (mesh->num_normals > 0)
+	{
+		glGenBuffers(1, (GLuint*)&mesh->b_normals);
+		glBindBuffer(GL_ARRAY_BUFFER, mesh->b_normals);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * mesh->num_normals * 3, mesh->normals, GL_STATIC_DRAW);
+	
+		glVertexAttribPointer((uint)BufferIndex::NORMALS, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
+		glEnableVertexAttribArray((uint)BufferIndex::NORMALS);
+	}
+
+	if (mesh->num_tex_coords > 0) // tex_coords ///////////
+	{
+		glGenBuffers(1, (GLuint*)&mesh->b_texture_coords);
+		glBindBuffer(GL_ARRAY_BUFFER, mesh->b_texture_coords);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * mesh->num_tex_coords * 2, mesh->texture_coords, GL_STATIC_DRAW);
+	
+		glVertexAttribPointer((uint)BufferIndex::TEX_COORDINATES, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
+		glEnableVertexAttribArray((uint)BufferIndex::TEX_COORDINATES);
+	}
+	
 	glBindVertexArray(0);
 
-
-	//if (mesh->num_tex_coords > 0) // tex_coords ///////////
-	//{
-	//	glGenBuffers(1, (GLuint*)&mesh->b_indices);
-	//	glBindBuffer(GL_ARRAY_BUFFER, mesh->b_indices);
-	//	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * mesh->num_tex_coords * 2, mesh->texture_coords, GL_STATIC_DRAW);
-
-	//	glEnableVertexAttribArray((uint)BufferIndex::TEX_COORDINATES);
-	//	glVertexAttribPointer((uint)BufferIndex::TEX_COORDINATES, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
-
-	//}
-
-	//if (mesh->num_indices > 0)
-	//{
-	//	glGenBuffers(1, (GLuint*)&mesh->b_normals);
-	//	glBindBuffer(GL_ARRAY_BUFFER, mesh->b_normals);
-	//	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * mesh->num_normals * 3, mesh->normals, GL_STATIC_DRAW);
-
-	//	glEnableVertexAttribArray((uint)BufferIndex::NORMALS);
-	//	glVertexAttribPointer((uint)BufferIndex::NORMALS, 2, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-	//}
-
-	
 /*	glGenBuffers(1, (GLuint*)&mesh->b_vertices);
 	glBindBuffer(GL_ARRAY_BUFFER, mesh->b_vertices);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertices.size() * 8, &vertices, GL_STATIC_DRAW);
@@ -395,8 +301,8 @@ void ModuleRenderer3D::LoadBuffer(MeshEntry* mesh, float* vertices, uint* indice
 void ModuleRenderer3D::DrawMesh(MeshEntry* mesh)
 {	
 	glEnableVertexAttribArray((uint)BufferIndex::VERTICES);
-	/*glEnableVertexAttribArray((uint)BufferIndex::NORMALS);
-	glEnableVertexAttribArray((uint)BufferIndex::TEX_COORDINATES);*/
+	glEnableVertexAttribArray((uint)BufferIndex::NORMALS);
+	glEnableVertexAttribArray((uint)BufferIndex::TEX_COORDINATES);
 
 	glBindVertexArray(mesh->VAO);	
 	glDrawElements(GL_TRIANGLES, mesh->num_indices, GL_UNSIGNED_INT, NULL);
@@ -408,8 +314,8 @@ void ModuleRenderer3D::DrawMesh(MeshEntry* mesh)
 	glBindVertexArray(0);
 
 	glDisableVertexAttribArray((uint)BufferIndex::VERTICES);
-	/*glDisableVertexAttribArray((uint)BufferIndex::NORMALS);
-	glDisableVertexAttribArray((uint)BufferIndex::TEX_COORDINATES);*/
+	glDisableVertexAttribArray((uint)BufferIndex::NORMALS);
+	glDisableVertexAttribArray((uint)BufferIndex::TEX_COORDINATES);
 
 }
 

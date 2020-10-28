@@ -10,28 +10,25 @@ class aiMesh;
 enum class BufferIndex
 {
     VERTICES,
-    TEX_COORDINATES,
-    NORMALS
+    NORMALS,
+    TEX_COORDINATES
 };
 
 struct MeshEntry {
 
-    uint id_index = 0; // index in VRAM
     uint num_indices = 0;
     uint* indices;
     //std::vector<uint> indices;
 
-    uint id_vertex = 0; // unique vertex in VRAM
     uint num_vertices = 0;
-    float* vertices;
+    float* vertices ;
    //std::vector<float*> vertices;
 
-    float* normals = nullptr;
     uint num_normals = 0;
+    float* normals = nullptr;
     
-    
-    float* texture_coords = nullptr;
     uint num_tex_coords = 0;
+    float* texture_coords = nullptr;
 
     //vertex array object to hold all buffers
     uint VAO = 0;
@@ -41,9 +38,9 @@ struct MeshEntry {
     uint b_normals;
     uint b_texture_coords;
 
-    unsigned int MaterialIndex; //For now, a material is simply a texture and since mesh entries can share materials, 
-                                //we have a separate vector for them (m_Textures).
-                                //MeshEntry::MaterialIndex points into one of the textures in m_Textures.
+    //unsigned int MaterialIndex;   //For now, a material is simply a texture and since mesh entries can share materials, 
+                                    //we have a separate vector for them (m_Textures).
+                                    //MeshEntry::MaterialIndex points into one of the textures in m_Textures.
 };
 
 class Importer

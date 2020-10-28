@@ -61,7 +61,7 @@ bool ModuleWindow::Init()
 		}
 
 		window_flags = (SDL_WindowFlags)(flags);
-		window = SDL_CreateWindow("AnotherSmallEngine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, window_flags);
+		window = SDL_CreateWindow("Cookie Engine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, window_flags);
 
 		if(window == NULL)
 		{

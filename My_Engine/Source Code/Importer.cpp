@@ -68,15 +68,7 @@ MeshEntry* Importer::ImportMesh(const aiScene* scene, int i)
 	ourMesh->vertices = new float[ourMesh->num_vertices * 3];
 	// store into the previously created array the content of the vertices array of the mesh we are loading
 	memcpy(ourMesh->vertices, currentMesh->mVertices, sizeof(float) * ourMesh->num_vertices * 3);
-	
-	/*if (currentMesh->HasNormals())
-	{
-		ourMesh->num_normals = currentMesh->mNumVertices;
-		ourMesh->normals = new float [currentMesh->mNumVertices * 3];
-		memcpy(ourMesh->normals, currentMesh->mNormals, sizeof(float) * ourMesh->num_normals * 3);
-	}
-	
-	
+		
 	if (currentMesh->HasTextureCoords(0))
 	{
 		ourMesh->num_tex_coords = currentMesh->mNumVertices;
@@ -87,7 +79,14 @@ MeshEntry* Importer::ImportMesh(const aiScene* scene, int i)
 			ourMesh->texture_coords[i * 2] = currentMesh->mTextureCoords[0][i].x;
 			ourMesh->texture_coords[i * 2 + 1] = currentMesh->mTextureCoords[0][i].y;
 		}
-	}*/
+	}
+
+	if (currentMesh->HasNormals())
+	{
+		ourMesh->num_normals = currentMesh->mNumVertices;
+		ourMesh->normals = new float [currentMesh->mNumVertices * 3];
+		memcpy(ourMesh->normals, currentMesh->mNormals, sizeof(float) * ourMesh->num_normals * 3);
+	}
 
 	/*const aiVector3D Zero3D(0.0f, 0.0f, 0.0f);
 	ourMesh->vertices = new float[sizeof(float) * 8 * ourMesh->num_vertices];
