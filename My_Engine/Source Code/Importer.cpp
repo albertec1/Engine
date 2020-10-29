@@ -29,7 +29,7 @@ MeshEntry* Importer::LoadScene(const std::string& filename)
 
 	const aiScene* scene = aiImportFile(file_path, aiProcessPreset_TargetRealtime_MaxQuality | aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
 
-	//Make sure the scene was loaded correct
+	//Make sure the scene was loaded correctly
 	if (scene != nullptr && scene->HasMeshes())
 	{
 		// Use scene->mNumMeshes to iterate on scene->mMeshes array
@@ -64,7 +64,7 @@ MeshEntry* Importer::ImportMesh(const aiScene* scene, int i)
 	aiMesh* currentMesh = scene->mMeshes[i];
 	// copy vertices
 	ourMesh->num_vertices = currentMesh->mNumVertices;
-	// create a float array with 3 times the size of the number of vertices of the mesh
+	// create a float array with the size of the number of vertices of the mesh * 3 accounting for x, y and z
 	ourMesh->vertices = new float[ourMesh->num_vertices * 3];
 	// store into the previously created array the content of the vertices array of the mesh we are loading
 	memcpy(ourMesh->vertices, currentMesh->mVertices, sizeof(float) * ourMesh->num_vertices * 3);
@@ -88,26 +88,12 @@ MeshEntry* Importer::ImportMesh(const aiScene* scene, int i)
 		memcpy(ourMesh->normals, currentMesh->mNormals, sizeof(float) * ourMesh->num_normals * 3);
 	}
 
-	/*const aiVector3D Zero3D(0.0f, 0.0f, 0.0f);
-	ourMesh->vertices = new float[sizeof(float) * 8 * ourMesh->num_vertices];
-
-	for (unsigned int i = 0; i < currentMesh->mNumVertices; i++) {
-		const aiVector3D* pPos = &(currentMesh->mVertices[i]);
-		const aiVector3D* pNormal = currentMesh->HasNormals() ? &(currentMesh->mNormals[i]) : &Zero3D;
-		const aiVector3D* pTexCoord = currentMesh->HasTextureCoords(0) ? &(currentMesh->mTextureCoords[0][i]) : &Zero3D;
-
-		float v[] = {pPos->x, pPos->y, pPos->z,
-				 pTexCoord->x, pTexCoord->y,
-				 pNormal->x, pNormal->y, pNormal->z };
-
-		memcpy(&ourMesh->vertices[i * 8], v, sizeof(v));
-		
-	}*/
-
 	//copy faces
 	if (currentMesh->HasFaces())
 	{
 		//copy number of indices
+
+
 		ourMesh->num_indices = currentMesh->mNumFaces * 3;
 		////create an array with the size of the number of indices
 		ourMesh->indices = new uint [ourMesh->num_indices];
