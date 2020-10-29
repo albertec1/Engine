@@ -92,8 +92,6 @@ MeshEntry* Importer::ImportMesh(const aiScene* scene, int i)
 	if (currentMesh->HasFaces())
 	{
 		//copy number of indices
-
-
 		ourMesh->num_indices = currentMesh->mNumFaces * 3;
 		////create an array with the size of the number of indices
 		ourMesh->indices = new uint [ourMesh->num_indices];

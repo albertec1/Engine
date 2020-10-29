@@ -3,7 +3,6 @@
 
 Window::Window(bool _active) : active(_active)
 {
-
 }
 
 Window::~Window()

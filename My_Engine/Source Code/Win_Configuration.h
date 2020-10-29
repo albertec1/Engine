@@ -12,14 +12,18 @@ public:
 	const uint default_x = 956;
 	const uint default_y = 609;
 public:
-	Win_Configuration();
+
+	Win_Configuration(int _max_fps);
 	virtual ~Win_Configuration();
 
 	void Draw() override;
+	void CleanUp() override;
 
 	void AddInput(const char* entry);
 	void AddFPS(float fps, float ms);
 
+	bool changeFPSlimit = false;
+	int max_fps;
 
 private:
 	ImGuiTextBuffer input_buf;

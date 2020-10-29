@@ -5,14 +5,17 @@
 
 #include "Window.h"
 #include "Win_Inspector.h"
+#include "Win_Configuration.h"
 
 
 
 ModuleMenu::ModuleMenu(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 	inspector = new Win_Inspector(false);
+	configuration = new Win_Configuration((int)App->GetFRLimit());
 
 	AddWindow(inspector);
+	AddWindow(configuration);
 }
 
 ModuleMenu::~ModuleMenu()
@@ -90,6 +93,14 @@ update_status ModuleMenu::Update(float dt)
 			if (ImGui::MenuItem("Inspector", " ", inspector->active))
 			{ 
 				inspector->SetActive();
+			}
+			if (ImGui::MenuItem("Configuration", " ", configuration->active))
+			{
+				configuration->SetActive();
+				if (configuration->changeFPSlimit)
+				{
+					App->SetFRLimit(configuration->max_fps);
+				}
 			}
 			ImGui::EndMenu();
 		}

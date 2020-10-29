@@ -1,19 +1,28 @@
 
-#include "Application.h"
 #include "Win_Configuration.h"
 #include "ImGui.h"
 #include "ModuleWindow.h"
 #include "Color.h"
 
-using namespace std;
-
 // ---------------------------------------------------------
-Win_Configuration::Win_Configuration() : Window("Configuration"),
+Win_Configuration::Win_Configuration(int _max_fps) : Window("Configuration"),
 fps_log(100), ms_log(100)
 {}
 
 Win_Configuration::~Win_Configuration()
 {}
+
+void Win_Configuration::CleanUp()
+{
+}
+
+void Win_Configuration::AddInput(const char* entry)
+{
+}
+
+void Win_Configuration::AddFPS(float fps, float ms)
+{
+}
 
 void Win_Configuration::Draw()
 {
@@ -25,13 +34,14 @@ void Win_Configuration::Draw()
 	{
 		if (ImGui::CollapsingHeader("Application"))
 		{
-			int max_fps = App->GetFRLimit();
 			if (ImGui::SliderInt("Max FPS", &max_fps, 0, 120))
-				App->SetFRLimit(max_fps);
-
+			{
+				changeFPSlimit = true;
+			}
+			
 			ImGui::Text("Limit Framerate:");
 			ImGui::SameLine();
-			ImGui::TextColored(YELLOW, "%i", App->GetFramerateLimit());
+			ImGui::TextColored(YELLOW, "%i", max_fps);
 
 			char title[25];
 			sprintf_s(title, 25, "Framerate %.1f", fps_log[fps_log.size() - 1]);
@@ -41,3 +51,4 @@ void Win_Configuration::Draw()
 		}
 		ImGui::End();
 	}
+}

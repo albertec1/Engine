@@ -6,6 +6,7 @@
 
 class Window;
 class Win_Inspector;
+class Win_Configuration;
 
 class ModuleMenu : public Module
 {
@@ -24,6 +25,8 @@ public:
 
 	std::vector<Window*> winArray;
 	Win_Inspector* inspector = nullptr;
+	Win_Configuration* configuration = nullptr;
+	
 };
 
 #endif //__ModuleEditor_H__
