@@ -133,3 +133,19 @@ void Application::Exit()
 {
 	exit = true;
 }
+
+uint Application::GetFRLimit() const
+{
+	if (miliseconds > 0)
+		return (uint)((1.0f / (float)miliseconds) * 1000.0f);
+	else
+		return 0;
+}
+
+void Application::SetFRLimit(uint max_framerate)
+{
+	if (max_framerate > 0)
+		miliseconds = 1000 / max_framerate;
+	else
+		miliseconds = 0;
+}

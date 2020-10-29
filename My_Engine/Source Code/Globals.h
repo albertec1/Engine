@@ -17,6 +17,7 @@ void log(const char file[], int line, const char* format, ...);
 #define RADTODEG 57.295779513082320876f
 #define HAVE_M_PI
 
+#define YELLOW ImVec4(1.f,1.f,0.f,1.f)
 
 typedef unsigned int uint;
 

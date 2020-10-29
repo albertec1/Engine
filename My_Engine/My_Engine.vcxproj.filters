@@ -106,6 +106,9 @@
     <ClCompile Include="Source Code\Win_Inspector.cpp">
       <Filter>Source Code\Window</Filter>
     </ClCompile>
+    <ClCompile Include="Source Code\Win_Configutation.cpp">
+      <Filter>Source Code\Window</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source Code\Application.h">
@@ -217,6 +220,9 @@
       <Filter>Source Code\Window</Filter>
     </ClInclude>
     <ClInclude Include="Source Code\Win_Inspector.h">
+      <Filter>Source Code\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\Win_Configuration.h">
       <Filter>Source Code\Window</Filter>
     </ClInclude>
   </ItemGroup>

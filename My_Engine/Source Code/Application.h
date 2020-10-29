@@ -35,6 +35,7 @@ private:
 	float	dt;
 	std::list<Module*> list_modules;
 	bool exit;
+	int	miliseconds;
 
 public:
 
@@ -46,6 +47,8 @@ public:
 	bool CleanUp();
 	void OpenBrowser(const char* url) const;
 	void Exit();
+	uint GetFRLimit() const;
+	void SetFRLimit(uint max_framerate);
 
 private:
 
