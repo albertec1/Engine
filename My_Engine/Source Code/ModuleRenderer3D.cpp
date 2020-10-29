@@ -1,5 +1,6 @@
 #include "Application.h"
 #include "ModuleRenderer3D.h"
+#include "ModuleTextures.h"
 
 #include <iostream>
 
@@ -9,6 +10,9 @@
 
 #pragma comment (lib, "glu32.lib")    /* link OpenGL Utility lib     */
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
+
+#define CHECKERS_WIDTH
+#define CHECKERS_HEIGHT
 
 ModuleRenderer3D::ModuleRenderer3D(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -327,3 +331,14 @@ void ModuleRenderer3D::DrawAllMeshes()
 	}
 }
            
+void ModuleRenderer3D::LoadTexture(Texture* tex)
+{
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+	glGenTextures(1, &tex->textureID);
+	glBindTexture(GL_TEXTURE_2D, tex->textureID);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, CHECKERS_WIDTH, CHECKERS_HEIGHT, 0, GL_RGBA, GL_UNSIGNED_BYTE, checkerImage);
+}

@@ -9,6 +9,8 @@
 
 #define MAX_LIGHTS 8
 
+class texture;
+
 class ModuleRenderer3D : public Module
 {
 public:
@@ -35,9 +37,12 @@ public:
 
 	std::vector<MeshEntry*> mesh_array;
 
+	const void* checkerImage;
+
 private:
 
 	void LoadBuffer(MeshEntry* mesh, float* vertices, uint* indices);
+	void LoadTexture(Texture* tex);
 	void DrawMesh(MeshEntry* mesh);
 	void DrawAllMeshes();
 
