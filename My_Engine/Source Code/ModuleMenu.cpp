@@ -74,7 +74,10 @@ update_status ModuleMenu::Update(float dt)
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplSDL2_NewFrame(App->window->window);
 	ImGui::NewFrame();
-
+	if (configuration->changeFPSlimit)
+	{
+		App->SetFRLimit(configuration->max_fps);
+	}
 
 	//Top bar menu, with an option to close the editor
 	if (ImGui::BeginMainMenuBar())
@@ -97,10 +100,7 @@ update_status ModuleMenu::Update(float dt)
 			if (ImGui::MenuItem("Configuration", " ", configuration->active))
 			{
 				configuration->SetActive();
-				if (configuration->changeFPSlimit)
-				{
-					App->SetFRLimit(configuration->max_fps);
-				}
+				
 			}
 			ImGui::EndMenu();
 		}
