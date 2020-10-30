@@ -42,6 +42,3 @@ enum update_status
 #define VSYNC true
 #define TITLE "Cookie Engine"
 
-class Application;
-
-extern Application* App;

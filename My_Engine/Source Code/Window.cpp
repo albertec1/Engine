@@ -15,6 +15,5 @@ void Window::SetActive()
 	active = !active;
 }
 
-void Window::Draw() {};
 
 

@@ -1,6 +1,5 @@
 
 #include "Window.h"
-#include "ImGui.h"
 #include <vector>
 
 class Win_Console : public Window
@@ -12,7 +11,7 @@ public:
 	void Draw() override;
 
 	void CleanUp() override;
-	void ConsoleLog(char* text);
+	void ConsoleLog(const char* text);
 
 private:
 

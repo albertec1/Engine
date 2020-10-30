@@ -1,6 +1,5 @@
-#pragma once
+
 #include "Application.h"
-#include "ModuleMenu.h"
 #include "Globals.h"
 
 void log(const char file[], int line, const char* format, ...)
@@ -18,7 +17,8 @@ void log(const char file[], int line, const char* format, ...)
 
 	if (App != NULL)
 	{
-		App->menu->ConsoleLog(tmp_string2);
+		sprintf_s(tmp_string2, 4096, "\n%s", tmp_string);
+		App->Log(tmp_string);
 	}
 		
 }

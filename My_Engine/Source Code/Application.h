@@ -54,6 +54,7 @@ public:
 	void Exit();
 	uint GetFRLimit() const;
 	void SetFRLimit(uint max_framerate);
+	void Log(const char* text);
 
 private:
 
@@ -61,3 +62,4 @@ private:
 	void PrepareUpdate();
 	void FinishUpdate();
 };
+extern Application* App;

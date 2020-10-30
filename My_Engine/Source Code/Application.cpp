@@ -174,4 +174,9 @@ void Application::SetFRLimit(uint max_framerate)
 		miliseconds = 0;
 }
 
-Application* App = nullptr;
+
+
+void Application::Log(const char* text)
+{
+	menu->Log(text);
+}
