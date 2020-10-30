@@ -22,6 +22,7 @@ public:
 
 	void AddWindow(Window* window);
 	void LogFPS(float fps, float ms);
+	void ConsoleLog(char* text);
 	void Render();
 public:
 	bool show_demo_window;

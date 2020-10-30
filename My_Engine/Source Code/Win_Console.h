@@ -1,6 +1,7 @@
 
 #include "Window.h"
 #include "ImGui.h"
+#include <vector>
 
 class Win_Console : public Window
 {
@@ -10,11 +11,11 @@ public:
 
 	void Draw() override;
 
-	void CleanUp();
-	void AddLog(const char* entry);
+	void CleanUp() override;
+	void ConsoleLog(char* text);
 
 private:
 
-	ImGuiTextBuffer buffer;
-	bool scrollToBottom = true;
+	std::vector<char*>	buffer;
+	bool scrollToBottom;
 };

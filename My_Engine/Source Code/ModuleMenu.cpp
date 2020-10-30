@@ -191,3 +191,9 @@ void ModuleMenu::LogFPS(float fps, float ms)
 	if (configuration != nullptr)
 		configuration->AddLogFPS(fps, ms);
 }
+
+void ModuleMenu::ConsoleLog(char* text)
+{
+	if (console != nullptr)
+		console->ConsoleLog(text);
+}

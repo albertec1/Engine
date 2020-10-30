@@ -173,3 +173,5 @@ void Application::SetFRLimit(uint max_framerate)
 	else
 		miliseconds = 0;
 }
+
+Application* App = nullptr;
