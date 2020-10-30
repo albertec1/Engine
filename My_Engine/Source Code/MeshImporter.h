@@ -43,20 +43,19 @@ struct MeshEntry {
                                     //MeshEntry::MaterialIndex points into one of the textures in m_Textures.
 };
 
-class Importer
+class MeshImporter
 {
 public:
-    Importer();
+    MeshImporter();
 
-    ~Importer();
+    ~MeshImporter();
 
     MeshEntry* ImportMesh(const aiScene* scene, int i);
     MeshEntry* LoadScene(const std::string& filename);
 
-
 private:
-    bool InitMaterials(const aiScene* pScene, const std::string& Filename); //for textures; not using this yet
     void Clear();
+  
 
 #define INVALID_MATERIAL 0xFFFFFFFF
 

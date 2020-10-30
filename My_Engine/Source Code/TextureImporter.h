@@ -7,7 +7,7 @@
 class TextureImporter
 {
 public:
-	
+
 	TextureImporter();
 	~TextureImporter();
 

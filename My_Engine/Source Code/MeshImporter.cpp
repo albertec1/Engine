@@ -1,5 +1,5 @@
 #include "Globals.h"
-#include "Importer.h"
+#include "MeshImporter.h"
 #include "Assimp.h"
 #include "Application.h"
 
@@ -7,16 +7,16 @@
 
 #include <cmath>
 
-Importer::Importer()
+MeshImporter::MeshImporter()
 {
 
 }
 
-Importer::~Importer()
+MeshImporter::~MeshImporter()
 {
 }
 
-MeshEntry* Importer::LoadScene(const std::string& filename)
+MeshEntry* MeshImporter::LoadScene(const std::string& filename)
 {
 	MeshEntry* ret = nullptr;
 	//import the scene from a file
@@ -55,7 +55,7 @@ MeshEntry* Importer::LoadScene(const std::string& filename)
 	return ret;
 }
 
-MeshEntry* Importer::ImportMesh(const aiScene* scene, int i)
+MeshEntry* MeshImporter::ImportMesh(const aiScene* scene, int i)
 {	
 	bool ret = true;
 
@@ -113,12 +113,7 @@ MeshEntry* Importer::ImportMesh(const aiScene* scene, int i)
 	return ourMesh;
 }
 
-bool Importer::InitMaterials(const aiScene* pScene, const std::string& Filename)
-{
-	return false;
-}
- 
-void Importer::Clear()
+void MeshImporter::Clear()
 {
 }
 

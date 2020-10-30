@@ -1,6 +1,6 @@
 #include "Application.h"
 #include "ModuleRenderer3D.h"
-#include "ModuleTextures.h"
+#include "TextureImporter.h"
 
 #include <iostream>
 
@@ -243,7 +243,7 @@ void ModuleRenderer3D::OnResize(int width, int height)
 
 MeshEntry* ModuleRenderer3D::LoadModel(const std::string& filename)
 {
-	Importer imp;
+	MeshImporter imp;
 	MeshEntry* temp = imp.LoadScene(filename);
 	LoadBuffer(temp, temp->vertices, temp->indices);
 	mesh_array.push_back(temp);

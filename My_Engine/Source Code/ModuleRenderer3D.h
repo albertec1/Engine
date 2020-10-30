@@ -3,7 +3,7 @@
 #include "Globals.h"
 #include "glmath.h"
 #include "Light.h"
-#include "Importer.h"
+#include "MeshImporter.h"
 #include <vector>
 #include <string>
 
