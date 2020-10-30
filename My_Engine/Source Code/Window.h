@@ -5,7 +5,6 @@
 class Window
 {
 public:
-
 	
 	Window(bool _active);
 	~Window();

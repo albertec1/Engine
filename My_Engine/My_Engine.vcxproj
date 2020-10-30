@@ -166,7 +166,7 @@
     <ClCompile Include="Source Code\Dependencies\ImGui\imgui_impl_sdl.cpp" />
     <ClCompile Include="Source Code\Dependencies\ImGui\imgui_widgets.cpp" />
     <ClCompile Include="Source Code\glmath.cpp" />
-    <ClCompile Include="Source Code\Importer.cpp" />
+    <ClCompile Include="Source Code\MeshImporter.cpp" />
     <ClCompile Include="Source Code\Light.cpp" />
     <ClCompile Include="Source Code\log.cpp" />
     <ClCompile Include="Source Code\Main.cpp" />
@@ -177,9 +177,9 @@
     <ClCompile Include="Source Code\ModulePhysics3D.cpp" />
     <ClCompile Include="Source Code\ModuleRenderer3D.cpp" />
     <ClCompile Include="Source Code\ModuleSceneIntro.cpp" />
-    <ClCompile Include="Source Code\ModuleTextures.cpp" />
     <ClCompile Include="Source Code\ModuleWindow.cpp" />
     <ClCompile Include="Source Code\Primitive.cpp" />
+    <ClCompile Include="Source Code\TextureImporter.cpp" />
     <ClCompile Include="Source Code\Timer.cpp" />
     <ClCompile Include="Source Code\Window.cpp" />
     <ClCompile Include="Source Code\Win_Configutation.cpp" />
@@ -207,7 +207,7 @@
     <ClInclude Include="Source Code\Globals.h" />
     <ClInclude Include="Source Code\Assimp.h" />
     <ClInclude Include="Source Code\ImGui.h" />
-    <ClInclude Include="Source Code\Importer.h" />
+    <ClInclude Include="Source Code\MeshImporter.h" />
     <ClInclude Include="Source Code\Light.h" />
     <ClInclude Include="Source Code\Module.h" />
     <ClInclude Include="Source Code\ModuleAudio.h" />
@@ -217,10 +217,10 @@
     <ClInclude Include="Source Code\ModulePhysics3D.h" />
     <ClInclude Include="Source Code\ModuleRenderer3D.h" />
     <ClInclude Include="Source Code\ModuleSceneIntro.h" />
-    <ClInclude Include="Source Code\ModuleTextures.h" />
     <ClInclude Include="Source Code\ModuleWindow.h" />
     <ClInclude Include="Source Code\OpenGl.h" />
     <ClInclude Include="Source Code\Primitive.h" />
+    <ClInclude Include="Source Code\TextureImporter.h" />
     <ClInclude Include="Source Code\Timer.h" />
     <ClInclude Include="Source Code\Window.h" />
     <ClInclude Include="Source Code\Win_Configuration.h" />

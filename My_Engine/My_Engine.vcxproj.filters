@@ -29,6 +29,9 @@
     <Filter Include="Source Code\Window">
       <UniqueIdentifier>{89780085-36e3-4c72-b9db-5535215f7e8a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Code\Importers">
+      <UniqueIdentifier>{d2b543d8-7818-4594-8a45-936647f66dea}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Application.cpp">
@@ -97,9 +100,6 @@
     <ClCompile Include="Source Code\Dependencies\ImGui\imgui_widgets.cpp">
       <Filter>Source Code\Dependencies\ImGui</Filter>
     </ClCompile>
-    <ClCompile Include="Source Code\Importer.cpp">
-      <Filter>Source Code</Filter>
-    </ClCompile>
     <ClCompile Include="Source Code\Window.cpp">
       <Filter>Source Code\Window</Filter>
     </ClCompile>
@@ -108,9 +108,12 @@
     </ClCompile>
     <ClCompile Include="Source Code\Win_Configutation.cpp">
       <Filter>Source Code\Window</Filter>
-     </ClCompile>
-    <ClCompile Include="Source Code\ModuleTextures.cpp">
-      <Filter>Source Code</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\TextureImporter.cpp">
+      <Filter>Source Code\Importers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\MeshImporter.cpp">
+      <Filter>Source Code\Importers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -213,9 +216,6 @@
     <ClInclude Include="Source Code\ImGui.h">
       <Filter>Source Code\Tools</Filter>
     </ClInclude>
-    <ClInclude Include="Source Code\Importer.h">
-      <Filter>Source Code</Filter>
-    </ClInclude>
     <ClInclude Include="Source Code\Assimp.h">
       <Filter>Source Code\Tools</Filter>
     </ClInclude>
@@ -227,9 +227,12 @@
     </ClInclude>
     <ClInclude Include="Source Code\Win_Configuration.h">
       <Filter>Source Code\Window</Filter>
-     </ClInclude>
-    <ClInclude Include="Source Code\ModuleTextures.h">
-      <Filter>Source Code</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\TextureImporter.h">
+      <Filter>Source Code\Importers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\MeshImporter.h">
+      <Filter>Source Code\Importers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
