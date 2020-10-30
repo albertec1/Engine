@@ -74,7 +74,10 @@ update_status ModuleMenu::Update(float dt)
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplSDL2_NewFrame(App->window->window);
 	ImGui::NewFrame();
-
+	if (configuration->changeFPSlimit)
+	{
+		App->SetFRLimit(configuration->max_fps);
+	}
 
 	//Top bar menu, with an option to close the editor
 	if (ImGui::BeginMainMenuBar())
@@ -97,10 +100,7 @@ update_status ModuleMenu::Update(float dt)
 			if (ImGui::MenuItem("Configuration", " ", configuration->active))
 			{
 				configuration->SetActive();
-				if (configuration->changeFPSlimit)
-				{
-					App->SetFRLimit(configuration->max_fps);
-				}
+				
 			}
 			ImGui::EndMenu();
 		}
@@ -108,6 +108,10 @@ update_status ModuleMenu::Update(float dt)
 		{
 			if (ImGui::MenuItem("Gui Demo")) {}
 
+			ImGui::EndMenu();		
+		}
+		if (ImGui::BeginMenu("About"))
+		{
 			if (ImGui::MenuItem("Documentation"))
 				App->OpenBrowser("https://github.com/albertec1/Yet-another-janky-Engine/wiki");
 
@@ -116,7 +120,6 @@ update_status ModuleMenu::Update(float dt)
 
 			if (ImGui::MenuItem("Report a bug"))
 				App->OpenBrowser("https://github.com/albertec1/Yet-another-janky-Engine/issues");
-
 			ImGui::EndMenu();
 		}
 		ImGui::EndMenuBar();
