@@ -19,6 +19,9 @@ void log(const char file[], int line, const char* format, ...);
 
 #define YELLOW ImVec4(1.f,1.f,0.f,1.f)
 
+#define CHECKERS_WIDTH 128
+#define CHECKERS_HEIGHT 128
+
 typedef unsigned int uint;
 
 enum update_status

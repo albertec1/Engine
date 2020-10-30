@@ -1,5 +1,6 @@
 #include "Application.h"
 #include "ModuleRenderer3D.h"
+#include "MeshImporter.h"
 #include "TextureImporter.h"
 
 #include <iostream>
@@ -10,9 +11,6 @@
 
 #pragma comment (lib, "glu32.lib")    /* link OpenGL Utility lib     */
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
-
-#define CHECKERS_WIDTH
-#define CHECKERS_HEIGHT
 
 ModuleRenderer3D::ModuleRenderer3D(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -111,6 +109,7 @@ bool ModuleRenderer3D::Init()
 		lights[0].Active(true);
 		glEnable(GL_LIGHTING);
 		glEnable(GL_COLOR_MATERIAL);
+		glEnable(GL_TEXTURE_2D);
 	}
 
 	// Stream log messages to Debug window
@@ -119,7 +118,8 @@ bool ModuleRenderer3D::Init()
 	aiAttachLogStream(&stream);
 
 	//temporary till i figure ou where to put it
-	LoadModel("Assets/Models/BakerHouse.fbx");
+	//LoadModel("Assets/Models/BakerHouse.fbx");
+	CreateCheckerImage();
 
 // Modern OpenGL square ////////////////////
 
@@ -163,7 +163,7 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
-
+	
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixf(App->camera->GetViewMatrix());
 
@@ -174,16 +174,20 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 		lights[i].Render();
 
 	//DIRECT MODE TRIANGLE EXAMPLE//
-	//glLineWidth(2.0f);
-	//glBegin(GL_TRIANGLES);
-	//
-	//glVertex3f(-5.f, 1.f, 0.f);
-	//glVertex3f( 5.f, 1.f, 0.f);
-	//glVertex3f( 0.f, 6.f, 0.f);
-	//
-	//glEnd();
-	//glLineWidth(1.0f);
+	glLineWidth(2.0f);
+	glBegin(GL_TRIANGLES);
+	
+	glTexCoord2f(0.0f, 0.f);
+	glVertex3f(-5.f, 1.f, 0.f);
 
+	glTexCoord2f(1.f, 0.f);
+	glVertex3f(5.f, 1.f, 0.f);
+	
+	glTexCoord2f(0.5f, 1.f);
+	glVertex3f(0.f, 6.f, 0.f);
+	
+	glEnd();
+	glFlush();
 
 	return UPDATE_CONTINUE;
 }
@@ -241,16 +245,16 @@ void ModuleRenderer3D::OnResize(int width, int height)
 	glLoadIdentity();
 }
 
-MeshEntry* ModuleRenderer3D::LoadModel(const std::string& filename)
+MeshInfo* ModuleRenderer3D::LoadModel(const std::string& filename)
 {
 	MeshImporter imp;
-	MeshEntry* temp = imp.LoadScene(filename);
+	MeshInfo* temp = imp.LoadScene(filename);
 	LoadBuffer(temp, temp->vertices, temp->indices);
 	mesh_array.push_back(temp);
 	return temp;
 }
 
-void ModuleRenderer3D::LoadBuffer(MeshEntry* mesh, float* vertices, uint* indices)
+void ModuleRenderer3D::LoadBuffer(MeshInfo* mesh, float* vertices, uint* indices)
 {
 	//Create a vertex array object which will hold all buffer objects
 	glGenVertexArrays(1, &mesh->VAO);
@@ -302,7 +306,7 @@ void ModuleRenderer3D::LoadBuffer(MeshEntry* mesh, float* vertices, uint* indice
 	
 }
 
-void ModuleRenderer3D::DrawMesh(MeshEntry* mesh)
+void ModuleRenderer3D::DrawMesh(MeshInfo* mesh)
 {	
 	glEnableVertexAttribArray((uint)BufferIndex::VERTICES);
 	glEnableVertexAttribArray((uint)BufferIndex::NORMALS);
@@ -331,14 +335,40 @@ void ModuleRenderer3D::DrawAllMeshes()
 	}
 }
            
-void ModuleRenderer3D::LoadTexture(Texture* tex)
+void ModuleRenderer3D::LoadTexture(TextureInfo* tex)
 {
+	
+}
+
+TextureInfo* ModuleRenderer3D::CreateCheckerImage() const
+{
+	GLubyte checkerImage[CHECKERS_HEIGHT][CHECKERS_WIDTH][4];
+	for (int i = 0; i < CHECKERS_HEIGHT; i++) {
+		for (int j = 0; j < CHECKERS_WIDTH; j++) {
+			int c = ((((i & 0x8) == 0) ^ (((j & 0x8)) == 0))) * 255;
+			checkerImage[i][j][0] = (GLubyte)c;
+			checkerImage[i][j][1] = (GLubyte)c;
+			checkerImage[i][j][2] = (GLubyte)c;
+			checkerImage[i][j][3] = (GLubyte)255;
+		}
+	}
+
+	TextureInfo* tex = new TextureInfo;
+	tex->path = "Checker";
+	tex->tex_width = CHECKERS_WIDTH;
+	tex->tex_height = CHECKERS_HEIGHT;
+
+	//Load Texture info and parameters
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-	glGenTextures(1, &tex->textureID);
-	glBindTexture(GL_TEXTURE_2D, tex->textureID);
+	glGenTextures(1, &tex->tex_ID);
+	glBindTexture(GL_TEXTURE_2D, tex->tex_ID);
+
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	//glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, CHECKERS_WIDTH, CHECKERS_HEIGHT, 0, GL_RGBA, GL_UNSIGNED_BYTE, checkerImage);
+
+	//Send checkerImage to OpenGL
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, tex->tex_width, tex->tex_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, checkerImage);
+	return tex;
 }

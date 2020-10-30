@@ -9,7 +9,7 @@
 
 #define MAX_LIGHTS 8
 
-class Texture;
+class TextureInfo;
 
 class ModuleRenderer3D : public Module
 {
@@ -24,9 +24,10 @@ public:
 	bool CleanUp();
 
 	void OnResize(int width, int height);
-	MeshEntry* LoadModel(const std::string& filename);
+	MeshInfo* LoadModel(const std::string& filename);
+	TextureInfo* CreateCheckerImage() const;
 	
-
+	
 public:
 
 	Light lights[MAX_LIGHTS];
@@ -35,15 +36,15 @@ public:
 	mat3x3 NormalMatrix;
 	mat4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
 
-	std::vector<MeshEntry*> mesh_array;
+	std::vector<MeshInfo*> mesh_array;
 
-	const void* checkerImage;
+	TextureInfo* CheckerTexture;
 
 private:
 
-	void LoadBuffer(MeshEntry* mesh, float* vertices, uint* indices);
-	void LoadTexture(Texture* tex);
-	void DrawMesh(MeshEntry* mesh);
+	void LoadBuffer(MeshInfo* mesh, float* vertices, uint* indices);
+	void LoadTexture(TextureInfo* tex);
+	void DrawMesh(MeshInfo* mesh);
 	void DrawAllMeshes();
 
  ////Testinng variables/////

@@ -1,4 +1,11 @@
 #include "TextureImporter.h"
+#include "Globals.h"
+#include "Assimp.h"
+#include "Application.h"
+
+#pragma comment (lib, "assimp.lib")
+
+#include <cmath>
 //Devil
 
 TextureImporter::TextureImporter()

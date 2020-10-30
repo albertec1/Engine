@@ -20,8 +20,11 @@ public:
 
 };
 
-class Texture
+class TextureInfo
 {
 public:
-	uint textureID;
+	uint tex_ID;
+	uint tex_width;
+	uint tex_height;
+	std::string path;
 };

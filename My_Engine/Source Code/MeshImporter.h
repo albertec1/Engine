@@ -14,7 +14,7 @@ enum class BufferIndex
     TEX_COORDINATES
 };
 
-struct MeshEntry {
+struct MeshInfo {
 
     uint num_indices = 0;
     uint* indices;
@@ -50,8 +50,8 @@ public:
 
     ~MeshImporter();
 
-    MeshEntry* ImportMesh(const aiScene* scene, int i);
-    MeshEntry* LoadScene(const std::string& filename);
+    MeshInfo* ImportMesh(const aiScene* scene, int i);
+    MeshInfo* LoadScene(const std::string& filename);
 
 private:
     void Clear();

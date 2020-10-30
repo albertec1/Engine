@@ -1,7 +1,6 @@
 #include "Globals.h"
 #include "MeshImporter.h"
 #include "Assimp.h"
-#include "Application.h"
 
 #pragma comment (lib, "assimp.lib")
 
@@ -16,9 +15,9 @@ MeshImporter::~MeshImporter()
 {
 }
 
-MeshEntry* MeshImporter::LoadScene(const std::string& filename)
+MeshInfo* MeshImporter::LoadScene(const std::string& filename)
 {
-	MeshEntry* ret = nullptr;
+	MeshInfo* ret = nullptr;
 	//import the scene from a file
 	const char* file_path = filename.c_str(); 
 
@@ -55,11 +54,11 @@ MeshEntry* MeshImporter::LoadScene(const std::string& filename)
 	return ret;
 }
 
-MeshEntry* MeshImporter::ImportMesh(const aiScene* scene, int i)
+MeshInfo* MeshImporter::ImportMesh(const aiScene* scene, int i)
 {	
 	bool ret = true;
 
-	MeshEntry* ourMesh = new MeshEntry();
+	MeshInfo* ourMesh = new MeshInfo();
 	// New mesh
 	aiMesh* currentMesh = scene->mMeshes[i];
 	// copy vertices
