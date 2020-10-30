@@ -4,6 +4,8 @@
 #include <vector>
 #include <Globals.h>
 
+#define LOG_LENGTH 50
+
 class Win_Configuration : public Window
 {
 public:
@@ -20,7 +22,7 @@ public:
 	void CleanUp() override;
 
 	void AddInput(const char* entry);
-	void AddFPS(float fps, float ms);
+	void AddLogFPS(float fps, float ms);
 
 	bool changeFPSlimit = false;
 	int max_fps;

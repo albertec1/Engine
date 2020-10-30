@@ -28,6 +28,13 @@ Application::Application()
 
 	// Renderer last!
 	AddModule(renderer3D);
+
+
+	contFPS = 0;
+	frames = 0;
+	miliseconds = 1000 / 60;
+	last_fps = -1;
+	last_ms = -1;
 }
 
 Application::~Application()
@@ -72,6 +79,23 @@ void Application::PrepareUpdate()
 // ---------------------------------------------
 void Application::FinishUpdate()
 {
+	++frames;
+	++contFPS;
+
+	if (fps_timer.Read() >= 1000)
+	{
+		last_fps = contFPS;
+		contFPS = 0;
+		fps_timer.Start();
+	}
+
+	last_ms = ms_timer.Read();
+
+	if (miliseconds > 0 && (last_ms < miliseconds))
+	{
+		SDL_Delay(miliseconds - last_ms);
+	}
+	menu->LogFPS((float)last_fps, (float)last_ms);
 }
 
 // Call PreUpdate, Update and PostUpdate on all modules

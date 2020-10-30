@@ -6,7 +6,7 @@
 
 // ---------------------------------------------------------
 Win_Configuration::Win_Configuration(int _max_fps) : Window("Configuration"),
-fps_log(100), ms_log(100)
+fps_log(LOG_LENGTH), ms_log(LOG_LENGTH)
 {}
 
 Win_Configuration::~Win_Configuration()
@@ -20,8 +20,23 @@ void Win_Configuration::AddInput(const char* entry)
 {
 }
 
-void Win_Configuration::AddFPS(float fps, float ms)
+void Win_Configuration::AddLogFPS(float fps, float ms)
 {
+	static uint count = 0;
+
+	if (count == LOG_LENGTH)
+	{
+		for (uint i = 0; i < LOG_LENGTH - 1; ++i)
+		{
+			fps_log[i] = fps_log[i + 1];
+			ms_log[i] = ms_log[i + 1];
+		}
+	}
+	else
+		++count;
+
+	fps_log[count - 1] = fps;
+	ms_log[count - 1] = ms;
 }
 
 void Win_Configuration::Draw()

@@ -19,6 +19,7 @@ public:
 	bool CleanUp() override;
 
 	void AddWindow(Window* window);
+	void LogFPS(float fps, float ms);
 	void Render();
 public:
 	bool show_demo_window;

@@ -69,7 +69,7 @@ bool ModuleMenu::CleanUp()
 
 update_status ModuleMenu::Update(float dt)
 {
-
+	
 	ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplSDL2_NewFrame(App->window->window);
@@ -168,4 +168,10 @@ void ModuleMenu::Render()
 		ImGui::RenderPlatformWindowsDefault();
 		SDL_GL_MakeCurrent(backup_current_window, backup_current_context);
 	}
+}
+
+void ModuleMenu::LogFPS(float fps, float ms)
+{
+	if (configuration != nullptr)
+		configuration->AddLogFPS(fps, ms);
 }

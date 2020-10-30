@@ -108,7 +108,7 @@
     </ClCompile>
     <ClCompile Include="Source Code\Win_Configutation.cpp">
       <Filter>Source Code\Window</Filter>
-     </ClCompile>
+    </ClCompile>
     <ClCompile Include="Source Code\ModuleTextures.cpp">
       <Filter>Source Code</Filter>
     </ClCompile>
@@ -227,7 +227,7 @@
     </ClInclude>
     <ClInclude Include="Source Code\Win_Configuration.h">
       <Filter>Source Code\Window</Filter>
-     </ClInclude>
+    </ClInclude>
     <ClInclude Include="Source Code\ModuleTextures.h">
       <Filter>Source Code</Filter>
     </ClInclude>

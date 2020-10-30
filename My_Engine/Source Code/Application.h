@@ -32,10 +32,15 @@ public:
 private:
 
 	Timer	ms_timer;
+	Timer	fps_timer;
 	float	dt;
 	std::list<Module*> list_modules;
 	bool exit;
 	int	miliseconds;
+	int contFPS;
+	int	last_ms;
+	int	last_fps;
+	Uint32 frames;
 
 public:
 
