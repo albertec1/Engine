@@ -25,7 +25,7 @@ public:
 	void AddLogFPS(float fps, float ms);
 
 	bool changeFPSlimit = false;
-	int max_fps = 60;
+	int max_fps;
 
 private:
 	ImGuiTextBuffer input_buf;
