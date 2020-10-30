@@ -21,7 +21,6 @@ public:
 	void Draw() override;
 	void CleanUp() override;
 
-	void AddInput(const char* entry);
 	void AddLogFPS(float fps, float ms);
 
 	bool changeFPSlimit = false;

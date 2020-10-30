@@ -109,14 +109,17 @@
     <ClCompile Include="Source Code\Win_Configutation.cpp">
       <Filter>Source Code\Window</Filter>
     </ClCompile>
-    <ClCompile Include="Source Code\ModuleTextures.cpp">
-      <Filter>Source Code</Filter>
-    </ClCompile>
     <ClCompile Include="Source Code\TextureImporter.cpp">
       <Filter>Source Code\Importers</Filter>
     </ClCompile>
     <ClCompile Include="Source Code\MeshImporter.cpp">
       <Filter>Source Code\Importers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\Win_Hierarchy.cpp">
+      <Filter>Source Code\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\Win_Console.cpp">
+      <Filter>Source Code\Window</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -231,14 +234,17 @@
     <ClInclude Include="Source Code\Win_Configuration.h">
       <Filter>Source Code\Window</Filter>
     </ClInclude>
-    <ClInclude Include="Source Code\ModuleTextures.h">
-      <Filter>Source Code</Filter>
-    </ClInclude>
     <ClInclude Include="Source Code\TextureImporter.h">
       <Filter>Source Code\Importers</Filter>
     </ClInclude>
     <ClInclude Include="Source Code\MeshImporter.h">
       <Filter>Source Code\Importers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\Win_Hierarchy.h">
+      <Filter>Source Code\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\Win_Console.h">
+      <Filter>Source Code\Window</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

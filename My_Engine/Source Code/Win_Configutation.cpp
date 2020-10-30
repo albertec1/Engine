@@ -16,9 +16,6 @@ void Win_Configuration::CleanUp()
 {
 }
 
-void Win_Configuration::AddInput(const char* entry)
-{
-}
 
 void Win_Configuration::AddLogFPS(float fps, float ms)
 {
@@ -41,7 +38,6 @@ void Win_Configuration::AddLogFPS(float fps, float ms)
 
 void Win_Configuration::Draw()
 {
-	//ImGui::Begin("Configuration", &active, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoFocusOnAppearing);
 	if (!active)
 		return;
 

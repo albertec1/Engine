@@ -6,16 +6,22 @@
 #include "Window.h"
 #include "Win_Inspector.h"
 #include "Win_Configuration.h"
+#include "Win_Hierarchy.h"
+#include "Win_Console.h"
 
 
 
 ModuleMenu::ModuleMenu(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 	inspector = new Win_Inspector(false);
+	hierarchy = new Win_Hierarchy(false);
 	configuration = new Win_Configuration((int)App->GetFRLimit());
+	console = new Win_Console(true);
 
+	AddWindow(console);
 	AddWindow(inspector);
 	AddWindow(configuration);
+	AddWindow(hierarchy);
 }
 
 ModuleMenu::~ModuleMenu()
@@ -100,7 +106,14 @@ update_status ModuleMenu::Update(float dt)
 			if (ImGui::MenuItem("Configuration", " ", configuration->active))
 			{
 				configuration->SetActive();
-				
+			}
+			if (ImGui::MenuItem("Hierarchy", " ", hierarchy->active))
+			{
+				hierarchy->SetActive();
+			}
+			if (ImGui::MenuItem("Console", " ", hierarchy->active))
+			{
+				console->SetActive();
 			}
 			ImGui::EndMenu();
 		}

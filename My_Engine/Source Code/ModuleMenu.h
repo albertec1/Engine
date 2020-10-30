@@ -7,6 +7,8 @@
 class Window;
 class Win_Inspector;
 class Win_Configuration;
+class Win_Hierarchy;
+class Win_Console;
 
 class ModuleMenu : public Module
 {
@@ -27,6 +29,8 @@ public:
 	std::vector<Window*> winArray;
 	Win_Inspector* inspector = nullptr;
 	Win_Configuration* configuration = nullptr;
+	Win_Hierarchy* hierarchy = nullptr;
+	Win_Console* console = nullptr;
 	
 };
 

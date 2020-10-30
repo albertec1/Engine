@@ -183,6 +183,8 @@
     <ClCompile Include="Source Code\Timer.cpp" />
     <ClCompile Include="Source Code\Window.cpp" />
     <ClCompile Include="Source Code\Win_Configutation.cpp" />
+    <ClCompile Include="Source Code\Win_Console.cpp" />
+    <ClCompile Include="Source Code\Win_Hierarchy.cpp" />
     <ClCompile Include="Source Code\Win_Inspector.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -224,6 +226,8 @@
     <ClInclude Include="Source Code\Timer.h" />
     <ClInclude Include="Source Code\Window.h" />
     <ClInclude Include="Source Code\Win_Configuration.h" />
+    <ClInclude Include="Source Code\Win_Console.h" />
+    <ClInclude Include="Source Code\Win_Hierarchy.h" />
     <ClInclude Include="Source Code\Win_Inspector.h" />
   </ItemGroup>
   <ItemGroup>
