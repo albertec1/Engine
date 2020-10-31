@@ -53,14 +53,14 @@ void Win_Configuration::Draw()
 			if (ImGui::InputText("Project Name", appName, 100, ImGuiInputTextFlags_EnterReturnsTrue))
 			{
 				App->SetTitleName(appName);
-			}				
+			}
 
 			if (ImGui::SliderInt("Max FPS", &max_fps, 0, 140))
 			{
 				changeFPSlimit = true;
 			}
 
-					
+
 			ImGui::Text("Limit Framerate:");
 			ImGui::SameLine();
 			ImGui::TextColored(YELLOW, "%i", max_fps);
@@ -71,31 +71,36 @@ void Win_Configuration::Draw()
 			sprintf_s(title, 25, "Milliseconds %0.1f", ms_log[ms_log.size() - 1]);
 			ImGui::PlotHistogram("##milliseconds", &ms_log[0], ms_log.size(), 0, title, 0.0f, 40.0f, ImVec2(310, 100));
 
-
-			if (ImGui::CollapsingHeader("Render"))
+		}
+		if (ImGui::CollapsingHeader("Render"))
+		{
+			/*bool enabled = App->renderer3D->depthEnabled;
+			if (ImGui::Checkbox("Depth Buffer", &enabled))
 			{
-				/*bool enabled = App->renderer3D->depthEnabled;
-				if (ImGui::Checkbox("Depth Buffer", &enabled))
-				{
-					App->renderer3D->SetDepthBufferEnabled(enabled);
-				}*/
-				if (ImGui::Checkbox("Depth Buffer", &App->renderer3D->depthEnabled))
-				{ 
-					App->renderer3D->SetDepthBufferEnabled();
-				}
-				if (ImGui::Checkbox("Wireframe Mode", &App->renderer3D->wireframeMode)) {}
+				App->renderer3D->SetDepthBufferEnabled(enabled);
+			}*/
+			if (ImGui::Checkbox("Depth Buffer", &App->renderer3D->depthEnabled))
+			{ 
+				App->renderer3D->SetDepthBufferEnabled();
+			}
+			if (ImGui::Checkbox("Wireframe Mode", &App->renderer3D->wireframeMode)) {}
 	
-				bool vsync = App->renderer3D->GetVSync();
-				if (ImGui::Checkbox("Vertical Sync", &vsync))
-				{
+			bool vsync = App->renderer3D->GetVSync();
+			if (ImGui::Checkbox("Vertical Sync", &vsync))
+			{
 					changeFPSlimit = true;
 					App->renderer3D->SetVSync(vsync);
-				}
-
 			}
-
-
+			
 		}
+		if (ImGui::CollapsingHeader("Input"))
+		{
+			ImGui::Text("Mouse position: %i, %i", App->input->GetMouseX(), App->input->GetMouseY());
+			ImGui::Text("Mouse motion: %i, %i", App->input->GetMouseXMotion(), App->input->GetMouseYMotion());
+			ImGui::Text("Mouse wheel: %i", App->input->GetMouseZ());
+		}
+
+	
 		ImGui::End();
 	}
 }
