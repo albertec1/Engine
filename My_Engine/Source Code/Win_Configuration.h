@@ -25,7 +25,7 @@ public:
 
 	bool changeFPSlimit = false;
 	bool changeTitleName = false;
-	int max_fps = 60;
+	int max_fps = 140;
 
 private:
 	ImGuiTextBuffer input_buf;

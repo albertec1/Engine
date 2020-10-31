@@ -55,11 +55,12 @@ void Win_Configuration::Draw()
 				App->SetTitleName(appName);
 			}				
 
-			if (ImGui::SliderInt("Max FPS", &max_fps, 0, 120))
+			if (ImGui::SliderInt("Max FPS", &max_fps, 0, 140))
 			{
 				changeFPSlimit = true;
 			}
-			
+
+					
 			ImGui::Text("Limit Framerate:");
 			ImGui::SameLine();
 			ImGui::TextColored(YELLOW, "%i", max_fps);
@@ -69,6 +70,31 @@ void Win_Configuration::Draw()
 			ImGui::PlotHistogram("##framerate", &fps_log[0], fps_log.size(), 0, title, 0.0f, 100.0f, ImVec2(310, 100));
 			sprintf_s(title, 25, "Milliseconds %0.1f", ms_log[ms_log.size() - 1]);
 			ImGui::PlotHistogram("##milliseconds", &ms_log[0], ms_log.size(), 0, title, 0.0f, 40.0f, ImVec2(310, 100));
+
+
+			if (ImGui::CollapsingHeader("Renderer"))
+			{
+				/*bool enabled = App->renderer3D->depthEnabled;
+				if (ImGui::Checkbox("Depth Buffer", &enabled))
+				{
+					App->renderer3D->SetDepthBufferEnabled(enabled);
+				}*/
+				if (ImGui::Checkbox("Depth Buffer", &App->renderer3D->depthEnabled))
+				{ 
+					App->renderer3D->SetDepthBufferEnabled();
+				}
+				if (ImGui::Checkbox("Wireframe Mode", &App->renderer3D->wireframeMode)) {}
+	
+				bool vsync = App->renderer3D->GetVSync();
+				if (ImGui::Checkbox("Vertical Sync", &vsync))
+				{
+					changeFPSlimit = true;
+					App->renderer3D->SetVSync(vsync);
+				}
+
+			}
+
+
 		}
 		ImGui::End();
 	}

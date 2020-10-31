@@ -167,6 +167,11 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixf(App->camera->GetViewMatrix());
 
+	if (wireframeMode)
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	else
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
 	// light 0 on cam pos
 	lights[0].SetPos(App->camera->Position.x, App->camera->Position.y, App->camera->Position.z);
 
@@ -208,6 +213,7 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	{
 		LOG("Error Drawimg Elements! %s\n", gluErrorString(error));
 	}*/
+
 
 	DrawAllMeshes();
 	//ImGui Render
@@ -371,4 +377,28 @@ TextureInfo* ModuleRenderer3D::CreateCheckerImage() const
 	//Send checkerImage to OpenGL
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, tex->tex_width, tex->tex_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, checkerImage);
 	return tex;
+}
+
+
+void ModuleRenderer3D::SetDepthBufferEnabled()
+{
+	if (depthEnabled)
+		glEnable(GL_DEPTH_TEST);
+	else
+		glDisable(GL_DEPTH_TEST);
+}
+
+bool ModuleRenderer3D::GetVSync() const
+{
+	return vsync;
+}
+
+void ModuleRenderer3D::SetVSync(bool vsync)
+{
+	if (this->vsync != vsync)
+	{
+		this->vsync = vsync;
+		if (SDL_GL_SetSwapInterval(vsync ? 1 : 0) < 0)
+			LOG("Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError());
+	}
 }

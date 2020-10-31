@@ -51,7 +51,7 @@ bool ModuleMenu::Start()
 	}
 
 	// Our state
-	show_demo_window = true;
+	show_demo_window = false;
 
 	// Setup Platform/Renderer bindings
 	ImGui_ImplSDL2_InitForOpenGL(App->window->window, App->renderer3D->gl_context);
@@ -145,12 +145,12 @@ update_status ModuleMenu::Update(float dt)
 	}
 
 	//Window with a checkbox allowing to show the demo window of ImGui
-	if (show_demo_window)
-		ImGui::ShowDemoWindow(&show_demo_window);
-	{
-		ImGui::Begin("DEMO");
-		ImGui::Checkbox("Demo Window", &show_demo_window);
-	}
+	//if (show_demo_window)
+	//	ImGui::ShowDemoWindow(&show_demo_window);
+	//{
+	//	ImGui::Begin("DEMO");
+	//	ImGui::Checkbox("Demo Window", &show_demo_window);
+	//}
 
 	std::vector<Window*>::iterator item = winArray.begin();
 
@@ -172,7 +172,7 @@ void ModuleMenu::AddWindow(Window* window)
 
 void ModuleMenu::Render()
 {
-	ImGui::End();
+	//ImGui::End();
 
 	
 
