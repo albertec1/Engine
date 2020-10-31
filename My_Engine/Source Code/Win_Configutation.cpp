@@ -107,6 +107,38 @@ void Win_Configuration::Draw()
 			int h = App->window->GetHeight();
 			if (ImGui::SliderInt("Width", &w, 0, 1920)) { App->window->SetWidth(w); }
 			if (ImGui::SliderInt("Height", &h, 0, 1080)) { App->window->SetHeight(h); }
+
+			bool fullscreen = App->window->IsFullscreen();
+			bool resizable = App->window->IsResizable();
+			bool borderless = App->window->IsBorderless();
+			bool full_desktop = App->window->IsFullscreenDesktop();
+
+			if (ImGui::Checkbox("Fullscreen", &fullscreen))
+			{
+				//App->window->SetFullscreen(fullscreen);
+			}
+				
+			ImGui::SameLine();
+			if (ImGui::Checkbox("Fullscreen Desktop", &full_desktop))
+			{
+				App->window->SetFullScreenDesktop(full_desktop);
+			}
+				
+			if (ImGui::Checkbox("Resizable ", &resizable))
+			{
+				App->window->SetResizable(resizable);
+			}
+			if (ImGui::IsItemHovered())
+			{
+				ImGui::SetTooltip("Must restart to apply");
+			}
+				
+			ImGui::SameLine();
+			if (ImGui::Checkbox("Borderless", &borderless))
+			{
+				App->window->SetBorderless(borderless);
+			}
+				
 		}
 
 		ImGui::End();

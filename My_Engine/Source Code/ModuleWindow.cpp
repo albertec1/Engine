@@ -127,3 +127,81 @@ void ModuleWindow::SetHeight(uint height)
 {
 	SDL_SetWindowSize(window, GetWidth(), height);
 }
+
+bool ModuleWindow::IsFullscreen() const
+{
+	return isFullScreen;
+}
+
+void ModuleWindow::SetFullscreen(bool set)
+{
+	if (set != isFullScreen)
+	{
+		isFullScreen = set;
+		if (isFullScreen == true)
+		{
+			if (SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN) != 0)
+			{
+				LOG("Could not switch to fullscreen: %s\n", SDL_GetError());
+			}
+				
+			isFullScreenDesktop = false;
+		}
+		else
+		{
+			if (SDL_SetWindowFullscreen(window, 0) != 0)
+			{
+				LOG("Could not exit fullscreen: %s\n", SDL_GetError());
+			}
+				
+		}
+	}
+}
+
+bool ModuleWindow::IsFullscreenDesktop() const
+{
+	return isFullScreenDesktop;
+}
+
+void ModuleWindow::SetFullScreenDesktop(bool set)
+{
+	if (set != isFullScreenDesktop)
+	{
+		isFullScreenDesktop = set;
+		if (isFullScreenDesktop == true)
+		{
+			if (SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP) != 0)
+				LOG("Could not switch to fullscreen desktop: %s\n", SDL_GetError());
+			isFullScreen = false;
+		}
+		else
+		{
+			if (SDL_SetWindowFullscreen(window, 0) != 0)
+				LOG("Could not exit full screen desktop: %s\n", SDL_GetError());
+		}
+	}
+}
+
+bool ModuleWindow::IsResizable() const
+{
+	return isResizable;
+}
+
+void ModuleWindow::SetResizable(bool set)
+{
+	isResizable = set;
+}
+
+bool ModuleWindow::IsBorderless() const
+{
+	return isBorderless;
+}
+
+void ModuleWindow::SetBorderless(bool set)
+{
+	if (set != isBorderless && isFullScreen == false && isFullScreenDesktop == false)
+	{
+		isBorderless = set;
+		SDL_SetWindowBordered(window, (SDL_bool)!isBorderless);
+	}
+}
