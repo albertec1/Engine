@@ -93,11 +93,32 @@ update_status ModuleMenu::Update(float dt)
 	//Top bar menu, with an option to close the editor
 	if (ImGui::BeginMainMenuBar())
 	{
-		if (ImGui::BeginMenu("Options"))
+		if (ImGui::BeginMenu("Archive"))
 		{
 			if (ImGui::MenuItem("Close", "Alt+F4"))
 			{
 				App->Exit();
+			}
+
+			ImGui::EndMenu();
+		}
+		if (ImGui::BeginMenu("Create"))
+		{
+			if (ImGui::MenuItem("Cube"))
+			{
+				//Create Cube
+			}
+			if (ImGui::MenuItem("Sphere"))
+			{
+				//Create Sphere
+			}
+			if (ImGui::MenuItem("Cylinder"))
+			{
+				//Create Cylinder
+			}
+			if (ImGui::MenuItem("Pyramid"))
+			{
+				//Create Pyramid
 			}
 
 			ImGui::EndMenu();
