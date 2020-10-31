@@ -23,9 +23,13 @@ public:
 	void AddWindow(Window* window);
 	void LogFPS(float fps, float ms);
 	void Log(const char* text);
+	inline bool UsingKeyboard() const { return using_keyboard; }
+
 	void Render();
 public:
 	bool show_demo_window;
+	bool using_keyboard;
+	bool using_mouse;
 
 	std::vector<Window*> winArray;
 	Win_Inspector* inspector = nullptr;

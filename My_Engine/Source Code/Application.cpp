@@ -29,7 +29,7 @@ Application::Application()
 	// Renderer last!
 	AddModule(renderer3D);
 
-
+	title_name = TITLE;
 	contFPS = 0;
 	frames = 0;
 	miliseconds = 1000 / 60;
@@ -179,4 +179,31 @@ void Application::SetFRLimit(uint max_framerate)
 void Application::Log(const char* text)
 {
 	menu->Log(text);
+}
+
+const char* Application::GetTitleName() const
+{
+	return title_name.c_str();
+}
+
+void Application::SetTitleName(const char* name)
+{
+	if (name != nullptr && name != title_name)
+	{
+		title_name = name;
+		window->SetTitle(name);
+	}
+}
+
+const char* Application::GetOrganizationName() const
+{
+	return organization_name.c_str();
+}
+
+void Application::SetOrganizationName(const char* name)
+{
+	if (name != nullptr && name != organization_name)
+	{
+		organization_name = name;
+	}
 }

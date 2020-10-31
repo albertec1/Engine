@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __APPLICATION_H__
+#define __APPLICATION_H__
 
 #include "Globals.h"
 #include "Timer.h"
@@ -41,6 +42,8 @@ private:
 	int	last_ms;
 	int	last_fps;
 	Uint32 frames;
+	std::string title_name;
+	std::string organization_name;
 
 public:
 
@@ -55,6 +58,10 @@ public:
 	uint GetFRLimit() const;
 	void SetFRLimit(uint max_framerate);
 	void Log(const char* text);
+	const char* GetTitleName() const;
+	void SetTitleName(const char* name);
+	const char* GetOrganizationName() const;
+	void SetOrganizationName(const char* name);
 
 private:
 
@@ -63,3 +70,5 @@ private:
 	void FinishUpdate();
 };
 extern Application* App;
+
+#endif //__APPLICATION_H__

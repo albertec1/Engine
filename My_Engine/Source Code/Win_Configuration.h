@@ -24,6 +24,7 @@ public:
 	void AddLogFPS(float fps, float ms);
 
 	bool changeFPSlimit = false;
+	bool changeTitleName = false;
 	int max_fps = 60;
 
 private:

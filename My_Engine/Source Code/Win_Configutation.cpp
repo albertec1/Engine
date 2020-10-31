@@ -1,8 +1,10 @@
 
 #include "Win_Configuration.h"
 #include "ImGui.h"
+#include "Application.h"
 #include "ModuleWindow.h"
 #include "Color.h"
+#include "Globals.h"
 
 // ---------------------------------------------------------
 Win_Configuration::Win_Configuration(int _max_fps) : Window("Configuration"),
@@ -45,6 +47,14 @@ void Win_Configuration::Draw()
 	{
 		if (ImGui::CollapsingHeader("Application"))
 		{
+			char appName[100];
+			strcpy_s(appName, 100, App->GetTitleName());
+
+			if (ImGui::InputText("Project Name", appName, 100, ImGuiInputTextFlags_EnterReturnsTrue))
+			{
+				App->SetTitleName(appName);
+			}				
+
 			if (ImGui::SliderInt("Max FPS", &max_fps, 0, 120))
 			{
 				changeFPSlimit = true;
