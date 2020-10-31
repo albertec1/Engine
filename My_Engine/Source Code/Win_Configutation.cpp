@@ -72,7 +72,7 @@ void Win_Configuration::Draw()
 			ImGui::PlotHistogram("##milliseconds", &ms_log[0], ms_log.size(), 0, title, 0.0f, 40.0f, ImVec2(310, 100));
 
 
-			if (ImGui::CollapsingHeader("Renderer"))
+			if (ImGui::CollapsingHeader("Render"))
 			{
 				/*bool enabled = App->renderer3D->depthEnabled;
 				if (ImGui::Checkbox("Depth Buffer", &enabled))
