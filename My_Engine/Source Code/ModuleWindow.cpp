@@ -103,3 +103,27 @@ void ModuleWindow::SetTitle(const char* title)
 {
 	SDL_SetWindowTitle(window, title);
 }
+
+uint ModuleWindow::GetWidth() const
+{
+	int width, height;
+	SDL_GetWindowSize(window, &width, &height);
+	return width;
+}
+
+uint ModuleWindow::GetHeight() const
+{
+	int width, height;
+	SDL_GetWindowSize(window, &width, &height);
+	return height;
+}
+
+void ModuleWindow::SetWidth(uint width)
+{
+	SDL_SetWindowSize(window, width, GetHeight());
+}
+
+void ModuleWindow::SetHeight(uint height)
+{
+	SDL_SetWindowSize(window, GetWidth(), height);
+}

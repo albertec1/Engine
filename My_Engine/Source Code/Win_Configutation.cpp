@@ -71,6 +71,8 @@ void Win_Configuration::Draw()
 			sprintf_s(title, 25, "Milliseconds %0.1f", ms_log[ms_log.size() - 1]);
 			ImGui::PlotHistogram("##milliseconds", &ms_log[0], ms_log.size(), 0, title, 0.0f, 40.0f, ImVec2(310, 100));
 
+
+
 		}
 		if (ImGui::CollapsingHeader("Render"))
 		{
@@ -99,8 +101,14 @@ void Win_Configuration::Draw()
 			ImGui::Text("Mouse motion: %i, %i", App->input->GetMouseXMotion(), App->input->GetMouseYMotion());
 			ImGui::Text("Mouse wheel: %i", App->input->GetMouseZ());
 		}
+		if (ImGui::CollapsingHeader("Window"))
+		{
+			int w = App->window->GetWidth();
+			int h = App->window->GetHeight();
+			if (ImGui::SliderInt("Width", &w, 0, 1920)) { App->window->SetWidth(w); }
+			if (ImGui::SliderInt("Height", &h, 0, 1080)) { App->window->SetHeight(h); }
+		}
 
-	
 		ImGui::End();
 	}
 }

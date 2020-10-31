@@ -19,6 +19,10 @@ public:
 	bool CleanUp();
 
 	void SetTitle(const char* title);
+	uint GetWidth() const;
+	uint GetHeight() const;
+	void SetWidth(uint width);
+	void SetHeight(uint height);
 
 public:
 	//The window we'll be rendering to
