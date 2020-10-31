@@ -32,6 +32,9 @@
     <Filter Include="Source Code\Importers">
       <UniqueIdentifier>{d2b543d8-7818-4594-8a45-936647f66dea}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Code\Dependencies\mmgr">
+      <UniqueIdentifier>{f3e98185-075f-4775-b3be-8bca2da13500}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Application.cpp">
@@ -120,6 +123,9 @@
     </ClCompile>
     <ClCompile Include="Source Code\Win_Console.cpp">
       <Filter>Source Code\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\Dependencies\mmgr\mmgr.cpp">
+      <Filter>Source Code\Dependencies\mmgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -245,6 +251,12 @@
     </ClInclude>
     <ClInclude Include="Source Code\Win_Console.h">
       <Filter>Source Code\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\Dependencies\mmgr\nommgr.h">
+      <Filter>Source Code\Dependencies\mmgr</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\Dependencies\mmgr\mmgr.h">
+      <Filter>Source Code\Dependencies\mmgr</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
