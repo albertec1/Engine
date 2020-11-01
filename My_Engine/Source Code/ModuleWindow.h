@@ -43,7 +43,7 @@ public:
 	SDL_Surface* screen_surface;
 	bool isFullScreen = false;
 	bool isFullScreenDesktop = false;
-	bool isResizable = false;
+	bool isResizable = true;
 	bool isBorderless = false;
 };
 
