@@ -15,7 +15,7 @@ public:
 	const uint default_y = 609;
 public:
 
-	Win_Configuration(int _max_fps);
+	Win_Configuration(int _max_fps, bool _active);
 	virtual ~Win_Configuration();
 
 	void Draw() override;
