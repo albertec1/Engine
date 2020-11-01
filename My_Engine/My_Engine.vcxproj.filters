@@ -26,6 +26,9 @@
     <Filter Include="Source Code\Tools">
       <UniqueIdentifier>{3aa83911-4af4-4f9c-9c62-0b695cae4ff9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Code\importers">
+      <UniqueIdentifier>{e96959a7-b3b1-4f6b-8ef2-63a852d70e3c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\Application.cpp">
@@ -94,8 +97,11 @@
     <ClCompile Include="Source Code\Dependencies\ImGui\imgui_widgets.cpp">
       <Filter>Source Code\Dependencies\ImGui</Filter>
     </ClCompile>
-    <ClCompile Include="Source Code\Importer.cpp">
-      <Filter>Source Code</Filter>
+    <ClCompile Include="Source Code\MeshImporter.cpp">
+      <Filter>Source Code\importers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\TextureImporter.cpp">
+      <Filter>Source Code\importers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -198,11 +204,14 @@
     <ClInclude Include="Source Code\ImGui.h">
       <Filter>Source Code\Tools</Filter>
     </ClInclude>
-    <ClInclude Include="Source Code\Importer.h">
-      <Filter>Source Code</Filter>
-    </ClInclude>
     <ClInclude Include="Source Code\Assimp.h">
       <Filter>Source Code\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\MeshImporter.h">
+      <Filter>Source Code\importers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source Code\TextureImporter.h">
+      <Filter>Source Code\importers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

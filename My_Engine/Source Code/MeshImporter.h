@@ -3,6 +3,7 @@
 #include "Globals.h"
 #include <string>
 #include <vector>
+#include "glmath.h"
 
 class aiScene;
 class aiMesh;
@@ -14,6 +15,13 @@ enum class BufferIndex
     TEX_COORDINATES
 };
 
+struct fvertex3
+{
+    float x;
+    float y;
+    float z;
+};
+
 struct MeshEntry {
 
     uint num_indices = 0;
@@ -21,7 +29,7 @@ struct MeshEntry {
     //std::vector<uint> indices;
 
     uint num_vertices = 0;
-    float* vertices ;
+    fvertex3* vertices = nullptr;
    //std::vector<float*> vertices;
 
     uint num_normals = 0;
@@ -43,15 +51,15 @@ struct MeshEntry {
                                     //MeshEntry::MaterialIndex points into one of the textures in m_Textures.
 };
 
-class Importer
+class MeshImporter
 {
 public:
-    Importer();
+    MeshImporter();
 
-    ~Importer();
+    ~MeshImporter();
 
     MeshEntry* ImportMesh(const aiScene* scene, int i);
-    MeshEntry* LoadScene(const std::string& filename);
+    MeshEntry* LoadSceneMeshes(const std::string& filename);
 
 
 private:
