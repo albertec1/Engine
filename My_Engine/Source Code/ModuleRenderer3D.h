@@ -3,8 +3,7 @@
 #include "Globals.h"
 #include "glmath.h"
 #include "Light.h"
-#include "MeshImporter.h"
-#include "TextureImporter.h"
+#include "Importer.h"
 #include <vector>
 #include <string>
 
@@ -23,8 +22,7 @@ public:
 	bool CleanUp();
 
 	void OnResize(int width, int height);
-	void LoadModel(const std::string& filename);
-	TextureInfo* CreateCheckerImage() const;
+	MeshEntry* LoadModel(const std::string& filename);
 	
 
 public:
@@ -36,21 +34,12 @@ public:
 	mat4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
 
 	std::vector<MeshEntry*> mesh_array;
-	std::vector<TextureInfo*> tex_array;
-
 
 private:
 
-	void LoadBuffer(MeshEntry* mesh);
+	void LoadBuffer(MeshEntry* mesh, float* vertices, uint* indices);
 	void DrawMesh(MeshEntry* mesh);
-	void DrawObject(MeshEntry* mesh, TextureInfo* tex);
 	void DrawAllMeshes();
-	void DrawAllObjects(TextureInfo* tex);
-
-	TextureImporter* tex_imp;
-	MeshImporter* mesh_imp;
-
-	TextureInfo* checker_info;
 
  ////Testinng variables/////
 	//float *positions;
