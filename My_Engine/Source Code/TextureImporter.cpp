@@ -1,6 +1,7 @@
 #include "TextureImporter.h"
 #include "Globals.h"
 #include "Application.h"
+<<<<<<< HEAD
 #include "Assimp.h"
 #include <cmath>
 
@@ -11,6 +12,17 @@
 #include "Dependencies/Devil/include/IL/ilut.h"
 #pragma comment( lib, "Devil/libx86/DevIL.lib" )
 #pragma comment( lib, "Devil/libx86/ILU.lib" )
+=======
+#include "Dependencies/Assimp/include/material.h"
+#include "Dependencies/Assimp/include/texture.h"
+
+#include <cmath>
+
+#pragma comment( lib, "Devil/libx86/DevIL.lib" )
+#include "Dependencies/Devil/include/ilu.h"
+#pragma comment( lib, "Devil/libx86/ILU.lib" )
+#include "Dependencies\Devil\include\ilut.h"
+>>>>>>> 39d0333f8e22603ea04a1523365e9bdd4ab7442f
 #pragma comment( lib, "Devil/libx86/ILUT.lib" )
 
 //Devil
@@ -25,6 +37,7 @@ TextureImporter::~TextureImporter()
 
 }
 
+<<<<<<< HEAD
 TextureInfo::~TextureInfo()
 {
 	ilDeleteImages(1, &this->tex_ID);
@@ -144,11 +157,20 @@ TextureInfo* TextureImporter::ImportTexture(const aiScene* pScene, int i)
 		}
 	}
 	return tex;
+=======
+uint* TextureImporter::LoadTexture()
+{
+	return 0;
+>>>>>>> 39d0333f8e22603ea04a1523365e9bdd4ab7442f
 }
 
 uint* TextureImporter::CheckerImage()
 {
 	return 0;
+<<<<<<< HEAD
 }
 
 
+=======
+}
+>>>>>>> 39d0333f8e22603ea04a1523365e9bdd4ab7442f

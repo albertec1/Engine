@@ -10,6 +10,8 @@
 
 #define MAX_LIGHTS 8
 
+class TextureInfo;
+
 class ModuleRenderer3D : public Module
 {
 public:
@@ -27,6 +29,12 @@ public:
 	TextureInfo* CreateCheckerImage() const;
 	
 
+	void SetDepthBufferEnabled();
+	bool GetVSync() const;
+	void SetVSync(bool vsync);
+
+	
+	
 public:
 
 	Light lights[MAX_LIGHTS];
@@ -35,8 +43,13 @@ public:
 	mat3x3 NormalMatrix;
 	mat4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
 
+
 	std::vector<MeshEntry*> mesh_array;
 	std::vector<TextureInfo*> tex_array;
+
+	bool depthEnabled = true;
+	bool wireframeMode = false;
+	bool vsync = true;
 
 
 private:
@@ -44,6 +57,7 @@ private:
 	void LoadBuffer(MeshEntry* mesh);
 	void DrawMesh(MeshEntry* mesh);
 	void DrawObject(MeshEntry* mesh, TextureInfo* tex);
+
 	void DrawAllMeshes();
 	void DrawAllObjects(TextureInfo* tex);
 

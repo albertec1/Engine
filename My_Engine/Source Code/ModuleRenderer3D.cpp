@@ -1,5 +1,7 @@
 #include "Application.h"
 #include "ModuleRenderer3D.h"
+#include "MeshImporter.h"
+#include "TextureImporter.h"
 
 #include <iostream>
 
@@ -109,6 +111,7 @@ bool ModuleRenderer3D::Init()
 		lights[0].Active(true);
 		glEnable(GL_LIGHTING);
 		glEnable(GL_COLOR_MATERIAL);
+		glEnable(GL_TEXTURE_2D);
 	}
 
 	// Stream log messages to Debug window
@@ -168,9 +171,14 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
-
+	
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixf(App->camera->GetViewMatrix());
+
+	if (wireframeMode)
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	else
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 	// light 0 on cam pos
 	lights[0].SetPos(App->camera->Position.x, App->camera->Position.y, App->camera->Position.z);
@@ -351,7 +359,7 @@ TextureInfo* ModuleRenderer3D::CreateCheckerImage() const
 	return tex;
 }
 
-void ModuleRenderer3D::DrawMesh(MeshEntry* mesh)
+void ModuleRenderer3D::DrawMesh(MeshInfo* mesh)
 {	
 	glEnableVertexAttribArray((uint)BufferIndex::VERTICES);
 	glEnableVertexAttribArray((uint)BufferIndex::NORMALS);
@@ -413,4 +421,26 @@ void ModuleRenderer3D::DrawAllObjects( TextureInfo* texture)
 		DrawObject(mesh_array[m], texture);
 	}
 }
-           
+
+void ModuleRenderer3D::SetDepthBufferEnabled()
+{
+	if (depthEnabled)
+		glEnable(GL_DEPTH_TEST);
+	else
+		glDisable(GL_DEPTH_TEST);
+}
+
+bool ModuleRenderer3D::GetVSync() const
+{
+	return vsync;
+}
+
+void ModuleRenderer3D::SetVSync(bool vsync)
+{
+	if (this->vsync != vsync)
+	{
+		this->vsync = vsync;
+		if (SDL_GL_SetSwapInterval(vsync ? 1 : 0) < 0)
+			LOG("Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError());
+	}
+}

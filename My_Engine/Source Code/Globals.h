@@ -17,8 +17,10 @@ void log(const char file[], int line, const char* format, ...);
 #define RADTODEG 57.295779513082320876f
 #define HAVE_M_PI
 
-#define CHECKERS_WIDTH 64
-#define CHECKERS_HEIGHT 64
+#define YELLOW ImVec4(1.f,1.f,0.f,1.f)
+
+#define CHECKERS_WIDTH 128
+#define CHECKERS_HEIGHT 128
 
 typedef unsigned int uint;
 
@@ -34,8 +36,10 @@ enum update_status
 #define SCREEN_HEIGHT 1024
 #define SCREEN_SIZE 1
 #define WIN_FULLSCREEN false
+#define WIN_MAXIMIZED true
 #define WIN_RESIZABLE true
 #define WIN_BORDERLESS false
 #define WIN_FULLSCREEN_DESKTOP false
 #define VSYNC true
-#define TITLE "3D Physics Playground"
+#define TITLE "Cookie Engine"
+
