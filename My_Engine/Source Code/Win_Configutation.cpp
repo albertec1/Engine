@@ -1,5 +1,6 @@
 
 #include "Win_Configuration.h"
+#include "OpenGl.h"
 #include "ImGui.h"
 #include "Application.h"
 #include "ModuleWindow.h"
@@ -187,6 +188,10 @@ void Win_Configuration::Draw()
 			ImGui::Text("SDL Version:");
 			ImGui::SameLine();
 			ImGui::TextColored(YELLOW, "%d.%d.%d", sdl_version.major, sdl_version.minor, sdl_version.patch);
+
+			ImGui::Text("OpenGL Version:");
+			ImGui::SameLine();
+			ImGui::TextColored(YELLOW, "%s", glGetString(GL_VERSION));
 
 			ImGui::Text("DevIL Version:");
 			ImGui::SameLine();

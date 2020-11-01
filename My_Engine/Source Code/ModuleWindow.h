@@ -41,7 +41,6 @@ public:
 
 	//The surface contained by the window
 	SDL_Surface* screen_surface;
-
 	bool isFullScreen = false;
 	bool isFullScreenDesktop = false;
 	bool isResizable = false;
