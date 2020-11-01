@@ -2,6 +2,7 @@
 #include "ModuleMenu.h"
 
 #include "ImGui.h"	
+#include "ModuleInput.h"
 
 #include "Window.h"
 #include "Win_Inspector.h"
@@ -13,9 +14,9 @@
 
 ModuleMenu::ModuleMenu(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
-	inspector = new Win_Inspector(false);
-	hierarchy = new Win_Hierarchy(false);
-	configuration = new Win_Configuration((int)App->GetFRLimit());
+	inspector = new Win_Inspector(true);
+	hierarchy = new Win_Hierarchy(true);
+	configuration = new Win_Configuration((int)App->GetFRLimit(), false);
 	console = new Win_Console(true);
 
 	AddWindow(console);
@@ -75,6 +76,11 @@ bool ModuleMenu::CleanUp()
 
 update_status ModuleMenu::Update(float dt)
 {
+	if ((App->input->GetKey(SDL_SCANCODE_LALT) == KEY_DOWN) && (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN))
+	{
+		App->input->quit = true;
+	}
+
 	ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplSDL2_NewFrame(App->window->window);
@@ -93,7 +99,7 @@ update_status ModuleMenu::Update(float dt)
 	//Top bar menu, with an option to close the editor
 	if (ImGui::BeginMainMenuBar())
 	{
-		if (ImGui::BeginMenu("Archive"))
+		if (ImGui::BeginMenu("File"))
 		{
 			if (ImGui::MenuItem("Close", "Alt+F4"))
 			{
@@ -137,7 +143,7 @@ update_status ModuleMenu::Update(float dt)
 			{
 				hierarchy->SetActive();
 			}
-			if (ImGui::MenuItem("Console", " ", hierarchy->active))
+			if (ImGui::MenuItem("Console", " ", console->active))
 			{
 				console->SetActive();
 			}

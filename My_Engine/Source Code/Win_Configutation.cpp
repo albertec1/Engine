@@ -12,7 +12,7 @@
 using namespace std;
 
 // ---------------------------------------------------------
-Win_Configuration::Win_Configuration(int _max_fps) : Window("Configuration"),
+Win_Configuration::Win_Configuration(int _max_fps, bool _active) : Window(_active),
 fps_log(LOG_LENGTH), ms_log(LOG_LENGTH)
 {}
 
