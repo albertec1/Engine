@@ -45,11 +45,6 @@ bool ModuleWindow::Init()
 			flags |= SDL_WINDOW_FULLSCREEN;
 		}
 
-		if (WIN_MAXIMIZED == true)
-		{
-			flags |= SDL_WINDOW_MAXIMIZED;
-		}
-
 		if (WIN_RESIZABLE == true)
 		{
 			flags |= SDL_WINDOW_RESIZABLE;
@@ -66,7 +61,7 @@ bool ModuleWindow::Init()
 		}
 
 		window_flags = (SDL_WindowFlags)(flags);
-		window = SDL_CreateWindow(App->GetTitleName(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, window_flags);
+		window = SDL_CreateWindow("Cookie Engine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, window_flags);
 
 		if(window == NULL)
 		{
@@ -77,8 +72,6 @@ bool ModuleWindow::Init()
 		{
 			//Get window surface
 			screen_surface = SDL_GetWindowSurface(window);
-
-			gl_context = SDL_GL_CreateContext(window);
 		}
 
 		LOG("Vendor: %s", glGetString(GL_VENDOR));
@@ -95,8 +88,6 @@ bool ModuleWindow::CleanUp()
 {
 	LOG("Destroying SDL window and quitting all SDL systems");
 
-	SDL_GL_DeleteContext(gl_context);
-
 	//Destroy window
 	if(window != NULL)
 	{
@@ -111,106 +102,4 @@ bool ModuleWindow::CleanUp()
 void ModuleWindow::SetTitle(const char* title)
 {
 	SDL_SetWindowTitle(window, title);
-}
-
-uint ModuleWindow::GetWidth() const
-{
-	int width, height;
-	SDL_GetWindowSize(window, &width, &height);
-	return width;
-}
-
-uint ModuleWindow::GetHeight() const
-{
-	int width, height;
-	SDL_GetWindowSize(window, &width, &height);
-	return height;
-}
-
-void ModuleWindow::SetWidth(uint width)
-{
-	SDL_SetWindowSize(window, width, GetHeight());
-}
-
-void ModuleWindow::SetHeight(uint height)
-{
-	SDL_SetWindowSize(window, GetWidth(), height);
-}
-
-bool ModuleWindow::IsFullscreen() const
-{
-	return isFullScreen;
-}
-
-void ModuleWindow::SetFullscreen(bool set)
-{
-	if (set != isFullScreen)
-	{
-		isFullScreen = set;
-		if (isFullScreen == true)
-		{
-			if (SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN) != 0)
-			{
-				LOG("Could not switch to fullscreen: %s\n", SDL_GetError());
-			}
-				
-			isFullScreenDesktop = false;
-		}
-		else
-		{
-			if (SDL_SetWindowFullscreen(window, 0) != 0)
-			{
-				LOG("Could not exit fullscreen: %s\n", SDL_GetError());
-			}
-				
-		}
-	}
-}
-
-bool ModuleWindow::IsFullscreenDesktop() const
-{
-	return isFullScreenDesktop;
-}
-
-void ModuleWindow::SetFullScreenDesktop(bool set)
-{
-	if (set != isFullScreenDesktop)
-	{
-		isFullScreenDesktop = set;
-		if (isFullScreenDesktop == true)
-		{
-			if (SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP) != 0)
-				LOG("Could not switch to fullscreen desktop: %s\n", SDL_GetError());
-			isFullScreen = false;
-		}
-		else
-		{
-			if (SDL_SetWindowFullscreen(window, 0) != 0)
-				LOG("Could not exit full screen desktop: %s\n", SDL_GetError());
-		}
-	}
-}
-
-bool ModuleWindow::IsResizable() const
-{
-	return isResizable;
-}
-
-void ModuleWindow::SetResizable(bool set)
-{
-	isResizable = set;
-}
-
-bool ModuleWindow::IsBorderless() const
-{
-	return isBorderless;
-}
-
-void ModuleWindow::SetBorderless(bool set)
-{
-	if (set != isBorderless && isFullScreen == false && isFullScreenDesktop == false)
-	{
-		isBorderless = set;
-		SDL_SetWindowBordered(window, (SDL_bool)!isBorderless);
-	}
 }

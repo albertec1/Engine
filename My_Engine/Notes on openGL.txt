@@ -108,9 +108,10 @@ Once the array has the information of the meshes we have to draw:
 	(Tutorials?)
 	- Loop all the meshes and draw them
 	(Scene?)
-	- glDrawElements() at postUpdate
+	- We are using indices so glDrawElements() is the appropiate function to draw
+	(info about glDrawElements())
 
-
+Our importer configuration:
 
 // Data loading ////
 Importer::LoadScene(filename, meshes_array) --> Creates a scene from a file and looks

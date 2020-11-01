@@ -26,14 +26,8 @@
     <Filter Include="Source Code\Tools">
       <UniqueIdentifier>{3aa83911-4af4-4f9c-9c62-0b695cae4ff9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Code\Window">
-      <UniqueIdentifier>{89780085-36e3-4c72-b9db-5535215f7e8a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Code\Importers">
-      <UniqueIdentifier>{d2b543d8-7818-4594-8a45-936647f66dea}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Code\Dependencies\mmgr">
-      <UniqueIdentifier>{f3e98185-075f-4775-b3be-8bca2da13500}</UniqueIdentifier>
+    <Filter Include="Source Code\importers">
+      <UniqueIdentifier>{e96959a7-b3b1-4f6b-8ef2-63a852d70e3c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -103,29 +97,11 @@
     <ClCompile Include="Source Code\Dependencies\ImGui\imgui_widgets.cpp">
       <Filter>Source Code\Dependencies\ImGui</Filter>
     </ClCompile>
-    <ClCompile Include="Source Code\Window.cpp">
-      <Filter>Source Code\Window</Filter>
-    </ClCompile>
-    <ClCompile Include="Source Code\Win_Inspector.cpp">
-      <Filter>Source Code\Window</Filter>
-    </ClCompile>
-    <ClCompile Include="Source Code\Win_Configutation.cpp">
-      <Filter>Source Code\Window</Filter>
+    <ClCompile Include="Source Code\MeshImporter.cpp">
+      <Filter>Source Code\importers</Filter>
     </ClCompile>
     <ClCompile Include="Source Code\TextureImporter.cpp">
-      <Filter>Source Code\Importers</Filter>
-    </ClCompile>
-    <ClCompile Include="Source Code\MeshImporter.cpp">
-      <Filter>Source Code\Importers</Filter>
-    </ClCompile>
-    <ClCompile Include="Source Code\Win_Hierarchy.cpp">
-      <Filter>Source Code\Window</Filter>
-    </ClCompile>
-    <ClCompile Include="Source Code\Win_Console.cpp">
-      <Filter>Source Code\Window</Filter>
-    </ClCompile>
-    <ClCompile Include="Source Code\Dependencies\mmgr\mmgr.cpp">
-      <Filter>Source Code\Dependencies\mmgr</Filter>
+      <Filter>Source Code\importers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -231,32 +207,11 @@
     <ClInclude Include="Source Code\Assimp.h">
       <Filter>Source Code\Tools</Filter>
     </ClInclude>
-    <ClInclude Include="Source Code\Window.h">
-      <Filter>Source Code\Window</Filter>
-    </ClInclude>
-    <ClInclude Include="Source Code\Win_Inspector.h">
-      <Filter>Source Code\Window</Filter>
-    </ClInclude>
-    <ClInclude Include="Source Code\Win_Configuration.h">
-      <Filter>Source Code\Window</Filter>
+    <ClInclude Include="Source Code\MeshImporter.h">
+      <Filter>Source Code\importers</Filter>
     </ClInclude>
     <ClInclude Include="Source Code\TextureImporter.h">
-      <Filter>Source Code\Importers</Filter>
-    </ClInclude>
-    <ClInclude Include="Source Code\MeshImporter.h">
-      <Filter>Source Code\Importers</Filter>
-    </ClInclude>
-    <ClInclude Include="Source Code\Win_Hierarchy.h">
-      <Filter>Source Code\Window</Filter>
-    </ClInclude>
-    <ClInclude Include="Source Code\Win_Console.h">
-      <Filter>Source Code\Window</Filter>
-    </ClInclude>
-    <ClInclude Include="Source Code\Dependencies\mmgr\nommgr.h">
-      <Filter>Source Code\Dependencies\mmgr</Filter>
-    </ClInclude>
-    <ClInclude Include="Source Code\Dependencies\mmgr\mmgr.h">
-      <Filter>Source Code\Dependencies\mmgr</Filter>
+      <Filter>Source Code\importers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

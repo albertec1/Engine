@@ -1,5 +1,4 @@
-#ifndef __APPLICATION_H__
-#define __APPLICATION_H__
+#pragma once
 
 #include "Globals.h"
 #include "Timer.h"
@@ -32,17 +31,8 @@ public:
 private:
 
 	Timer	ms_timer;
-	Timer	fps_timer;
 	float	dt;
 	std::list<Module*> list_modules;
-	bool exit;
-	int	miliseconds;
-	int contFPS;
-	int	last_ms;
-	int	last_fps;
-	Uint32 frames;
-	std::string title_name;
-	std::string organization_name;
 
 public:
 
@@ -53,14 +43,6 @@ public:
 	update_status Update();
 	bool CleanUp();
 	void OpenBrowser(const char* url) const;
-	void Exit();
-	uint GetFRLimit() const;
-	void SetFRLimit(uint max_framerate);
-	void Log(const char* text);
-	const char* GetTitleName() const;
-	void SetTitleName(const char* name);
-	const char* GetOrganizationName() const;
-	void SetOrganizationName(const char* name);
 
 private:
 
@@ -68,6 +50,3 @@ private:
 	void PrepareUpdate();
 	void FinishUpdate();
 };
-extern Application* App;
-
-#endif //__APPLICATION_H__

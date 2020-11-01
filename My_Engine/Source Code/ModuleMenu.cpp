@@ -2,27 +2,11 @@
 #include "ModuleMenu.h"
 
 #include "ImGui.h"	
-#include "ModuleInput.h"
-
-#include "Window.h"
-#include "Win_Inspector.h"
-#include "Win_Configuration.h"
-#include "Win_Hierarchy.h"
-#include "Win_Console.h"
-
 
 
 ModuleMenu::ModuleMenu(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
-	inspector = new Win_Inspector(true);
-	hierarchy = new Win_Hierarchy(true);
-	configuration = new Win_Configuration((int)App->GetFRLimit(), false);
-	console = new Win_Console(true);
 
-	AddWindow(console);
-	AddWindow(inspector);
-	AddWindow(configuration);
-	AddWindow(hierarchy);
 }
 
 ModuleMenu::~ModuleMenu()
@@ -52,7 +36,7 @@ bool ModuleMenu::Start()
 	}
 
 	// Our state
-	show_demo_window = false;
+	show_demo_window = true;
 
 	// Setup Platform/Renderer bindings
 	ImGui_ImplSDL2_InitForOpenGL(App->window->window, App->renderer3D->gl_context);
@@ -63,10 +47,6 @@ bool ModuleMenu::Start()
 
 bool ModuleMenu::CleanUp()
 {
-	std::vector<Window*>::iterator item = winArray.begin();
-	for (item; item != winArray.end(); ++item)
-		(*item)->CleanUp();
-
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplSDL2_Shutdown();
 	ImGui::DestroyContext();
@@ -76,133 +56,53 @@ bool ModuleMenu::CleanUp()
 
 update_status ModuleMenu::Update(float dt)
 {
-	if ((App->input->GetKey(SDL_SCANCODE_LALT) == KEY_DOWN) && (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN))
-	{
-		App->input->quit = true;
-	}
 
 	ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplSDL2_NewFrame(App->window->window);
 	ImGui::NewFrame();
 
-	ImGuiIO& io = ImGui::GetIO();
-	using_keyboard = io.WantCaptureKeyboard;
-	using_mouse = io.WantCaptureMouse;
-
-
-	if (configuration->changeFPSlimit)
-	{
-		App->SetFRLimit(configuration->max_fps);
-	}
-
 	//Top bar menu, with an option to close the editor
 	if (ImGui::BeginMainMenuBar())
 	{
-		if (ImGui::BeginMenu("File"))
+		if (ImGui::BeginMenu("Options"))
 		{
-			if (ImGui::MenuItem("Close", "Alt+F4"))
-			{
-				App->Exit();
-			}
-
-			ImGui::EndMenu();
-		}
-		if (ImGui::BeginMenu("Create"))
-		{
-			if (ImGui::MenuItem("Cube"))
-			{
-				//Create Cube
-			}
-			if (ImGui::MenuItem("Sphere"))
-			{
-				//Create Sphere
-			}
-			if (ImGui::MenuItem("Cylinder"))
-			{
-				//Create Cylinder
-			}
-			if (ImGui::MenuItem("Pyramid"))
-			{
-				//Create Pyramid
-			}
-
-			ImGui::EndMenu();
-		}
-		if (ImGui::BeginMenu("Windows"))
-		{
-			if (ImGui::MenuItem("Inspector", " ", inspector->active))
-			{ 
-				inspector->SetActive();
-			}
-			if (ImGui::MenuItem("Configuration", " ", configuration->active))
-			{
-				configuration->SetActive();
-			}
-			if (ImGui::MenuItem("Hierarchy", " ", hierarchy->active))
-			{
-				hierarchy->SetActive();
-			}
-			if (ImGui::MenuItem("Console", " ", console->active))
-			{
-				console->SetActive();
-			}
+			if (ImGui::MenuItem("Close", "Alt+F4")) { return UPDATE_STOP; }
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("Help"))
 		{
 			if (ImGui::MenuItem("Gui Demo")) {}
 
-			ImGui::EndMenu();		
-		}
-		if (ImGui::BeginMenu("About"))
-		{
 			if (ImGui::MenuItem("Documentation"))
-				App->OpenBrowser("https://github.com/albertec1/Yet-another-janky-Engine/wiki");
+					App->OpenBrowser("https://github.com/albertec1/Yet-another-janky-Engine/wiki");
 
 			if (ImGui::MenuItem("Download latest"))
-				App->OpenBrowser("https://github.com/albertec1/Yet-another-janky-Engine/releases");
+					App->OpenBrowser("https://github.com/albertec1/Yet-another-janky-Engine/releases");
 
 			if (ImGui::MenuItem("Report a bug"))
-				App->OpenBrowser("https://github.com/albertec1/Yet-another-janky-Engine/issues");
+					App->OpenBrowser("https://github.com/albertec1/Yet-another-janky-Engine/issues");
+
 			ImGui::EndMenu();
-		}
+			}
 		ImGui::EndMenuBar();
 		ImGui::End();
 	}
 
 	//Window with a checkbox allowing to show the demo window of ImGui
-	//if (show_demo_window)
-	//	ImGui::ShowDemoWindow(&show_demo_window);
-	//{
-	//	ImGui::Begin("DEMO");
-	//	ImGui::Checkbox("Demo Window", &show_demo_window);
-	//}
-
-	std::vector<Window*>::iterator item = winArray.begin();
-
-	for (item; item != winArray.end(); ++item)
+	if (show_demo_window)
+		ImGui::ShowDemoWindow(&show_demo_window);
 	{
-		(*item)->Draw();
+		ImGui::Begin("DEMO");
+		ImGui::Checkbox("Demo Window", &show_demo_window);		
 	}
-	
-		
 
 	return UPDATE_CONTINUE;
 }
 
-
-void ModuleMenu::AddWindow(Window* window)
-{
-	winArray.push_back(window);
-}
-
 void ModuleMenu::Render()
 {
-	//ImGui::End();
-
-	
-
+	ImGui::End();
 
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -216,16 +116,4 @@ void ModuleMenu::Render()
 		ImGui::RenderPlatformWindowsDefault();
 		SDL_GL_MakeCurrent(backup_current_window, backup_current_context);
 	}
-}
-
-void ModuleMenu::LogFPS(float fps, float ms)
-{
-	if (configuration != nullptr)
-		configuration->AddLogFPS(fps, ms);
-}
-
-void ModuleMenu::Log(const char* text)
-{
-	if (console != nullptr)
-		console->ConsoleLog(text);
 }
