@@ -45,6 +45,11 @@ bool ModuleWindow::Init()
 			flags |= SDL_WINDOW_FULLSCREEN;
 		}
 
+		if (WIN_MAXIMIZED == true)
+		{
+			flags |= SDL_WINDOW_MAXIMIZED;
+		}
+
 		if (WIN_RESIZABLE == true)
 		{
 			flags |= SDL_WINDOW_RESIZABLE;
@@ -61,7 +66,7 @@ bool ModuleWindow::Init()
 		}
 
 		window_flags = (SDL_WindowFlags)(flags);
-		window = SDL_CreateWindow(App->GetTitleName(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, window_flags);
+		window = SDL_CreateWindow(App->GetTitleName(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, window_flags);
 
 		if(window == NULL)
 		{
@@ -72,6 +77,8 @@ bool ModuleWindow::Init()
 		{
 			//Get window surface
 			screen_surface = SDL_GetWindowSurface(window);
+
+			gl_context = SDL_GL_CreateContext(window);
 		}
 
 		LOG("Vendor: %s", glGetString(GL_VENDOR));
@@ -87,6 +94,8 @@ bool ModuleWindow::Init()
 bool ModuleWindow::CleanUp()
 {
 	LOG("Destroying SDL window and quitting all SDL systems");
+
+	SDL_GL_DeleteContext(gl_context);
 
 	//Destroy window
 	if(window != NULL)

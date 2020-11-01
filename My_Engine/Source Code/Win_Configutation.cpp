@@ -151,7 +151,6 @@ void Win_Configuration::Draw()
 
 			if (ImGui::Checkbox("Fullscreen", &fullscreen))
 			{
-
 				//App->window->SetFullscreen(fullscreen);			//Doesn't work properly
 			}
 				
