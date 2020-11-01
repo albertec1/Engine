@@ -65,7 +65,6 @@ void Win_Configuration::Draw()
 				changeFPSlimit = true;
 			}
 
-
 			ImGui::Text("Limit Framerate:");
 			ImGui::SameLine();
 			ImGui::TextColored(YELLOW, "%i", max_fps);
