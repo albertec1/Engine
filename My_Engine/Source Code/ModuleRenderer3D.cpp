@@ -7,6 +7,8 @@
 #include "OpenGl.h"
 #include "Assimp.h"
 
+#include "Dependencies/Devil/include/IL/ilut.h"
+
 #pragma comment (lib, "glu32.lib")    /* link OpenGL Utility lib     */
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
 
@@ -114,8 +116,16 @@ bool ModuleRenderer3D::Init()
 	stream = aiGetPredefinedLogStream(aiDefaultLogStream_DEBUGGER, nullptr);
 	aiAttachLogStream(&stream);
 
+	mesh_imp = new MeshImporter;
+	//init textures
+	tex_imp = new TextureImporter;
+	//check Devil version
+	tex_imp->Init();
 	//temporary till i figure ou where to put it
+	tex_array.push_back(CreateCheckerImage());
+
 	LoadModel("Assets/Models/BakerHouse.fbx");
+
 
 // Modern OpenGL square ////////////////////
 
@@ -146,7 +156,6 @@ bool ModuleRenderer3D::Init()
 	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
 	//glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * 6, indices, GL_STATIC_DRAW);
 
-
 	// Projection matrix for
 	OnResize(SCREEN_WIDTH, SCREEN_HEIGHT);
 	return ret;
@@ -170,38 +179,39 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 		lights[i].Render();
 
 	//DIRECT MODE TRIANGLE EXAMPLE//
-	//glLineWidth(2.0f);
-	//glBegin(GL_TRIANGLES);
-	//
-	//glVertex3f(-5.f, 1.f, 0.f);
-	//glVertex3f( 5.f, 1.f, 0.f);
-	//glVertex3f( 0.f, 6.f, 0.f);
-	//
-	//glEnd();
-	//glLineWidth(1.0f);
+	/*glLineWidth(2.0f);
+	glBegin(GL_TRIANGLES);
 
+	glTexCoord2f(0.0f, 0.f);
+	glVertex3f(-5.f, 1.f, -5.f);
+
+	glTexCoord2f(1.f, 0.f);
+	glVertex3f(5.f, 1.f, -5.f);
+
+	glTexCoord2f(0.5f, 1.f);
+	glVertex3f(0.f, 6.f, -5.f);
+
+	glEnd();
+	glFlush();*/
 
 	return UPDATE_CONTINUE;
 }
 
-
 // PostUpdate present buffer to screen
 update_status ModuleRenderer3D::PostUpdate(float dt)
 {
-	SDL_Window* backup_current_window = SDL_GL_GetCurrentWindow();
-	SDL_GLContext backup_current_context = SDL_GL_GetCurrentContext();
-	SDL_GL_MakeCurrent(backup_current_window, backup_current_context);
-	
+
 	//glViewport(0, 0, (int)io.DisplaySize.x, (int)io.DisplaySize.y);
 
-	//glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
-	/*GLenum error = glGetError();
+	/*glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+	GLenum error = glGetError();
 	if (error != GL_NO_ERROR)
 	{
 		LOG("Error Drawimg Elements! %s\n", gluErrorString(error));
 	}*/
 
-	DrawAllMeshes();
+	//DrawAllMeshes();
+	DrawAllObjects(tex_array[1]);
 	//ImGui Render
 	App->menu->Render();
 	
@@ -237,65 +247,108 @@ void ModuleRenderer3D::OnResize(int width, int height)
 	glLoadIdentity();
 }
 
-MeshEntry* ModuleRenderer3D::LoadModel(const std::string& filename)
+void ModuleRenderer3D::LoadModel(const std::string& filename)
 {
-	Importer imp;
-	MeshEntry* temp = imp.LoadScene(filename);
-	LoadBuffer(temp, temp->vertices, temp->indices);
-	mesh_array.push_back(temp);
-	return temp;
+	MeshEntry* temp1 = mesh_imp->LoadSceneMeshes(filename);
+	LoadBuffer(temp1);
+	mesh_array.push_back(temp1);
+
+	TextureInfo* temp2 = tex_imp->LoadSceneTextures(filename);
+	tex_array.push_back(temp2);
 }
 
-void ModuleRenderer3D::LoadBuffer(MeshEntry* mesh, float* vertices, uint* indices)
+void ModuleRenderer3D::LoadBuffer(MeshEntry* mesh)
 {
-	//Create a vertex array object which will hold all buffer objects
-	glGenVertexArrays(1, &mesh->VAO);
-	glBindVertexArray(mesh->VAO);
-
 	glGenBuffers(1, (GLuint*)&mesh->b_vertices);
 	glBindBuffer(GL_ARRAY_BUFFER, mesh->b_vertices);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * mesh->num_vertices * 3, vertices, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * mesh->num_vertices * 3, mesh->vertices, GL_STATIC_DRAW);
 	
 	glGenBuffers(1, (GLuint*)&mesh->b_indices);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->b_indices);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * mesh->num_indices, indices, GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * mesh->num_indices, mesh->indices, GL_STATIC_DRAW);
 
-	glVertexAttribPointer((uint)BufferIndex::VERTICES, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray((uint)BufferIndex::VERTICES);
-
-	if (mesh->num_normals > 0)
-	{
-		glGenBuffers(1, (GLuint*)&mesh->b_normals);
-		glBindBuffer(GL_ARRAY_BUFFER, mesh->b_normals);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * mesh->num_normals * 3, mesh->normals, GL_STATIC_DRAW);
+	glGenBuffers(1, (GLuint*)&mesh->b_normals);
+	glBindBuffer(GL_ARRAY_BUFFER, mesh->b_normals);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * mesh->num_normals * 3, mesh->normals, GL_STATIC_DRAW);
 	
-		glVertexAttribPointer((uint)BufferIndex::NORMALS, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
-		glEnableVertexAttribArray((uint)BufferIndex::NORMALS);
+	glGenBuffers(1, (GLuint*)&mesh->b_texture_coords);
+	glBindBuffer(GL_ARRAY_BUFFER, mesh->b_texture_coords);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * mesh->num_tex_coords * 2, mesh->texture_coords, GL_STATIC_DRAW);
+
+
+	////Create a vertex array object which will hold all buffer objects
+	//glGenVertexArrays(1, &mesh->VAO);
+	//glBindVertexArray(mesh->VAO);
+
+	//glGenBuffers(1, (GLuint*)&mesh->b_vertices);
+	//glBindBuffer(GL_ARRAY_BUFFER, mesh->b_vertices);
+	//glBufferData(GL_ARRAY_BUFFER, sizeof(float) * mesh->num_vertices * 3, vertices, GL_STATIC_DRAW);
+
+	//glGenBuffers(1, (GLuint*)&mesh->b_indices);
+	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->b_indices);
+	//glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * mesh->num_indices, indices, GL_STATIC_DRAW);
+
+	//glVertexAttribPointer((uint)BufferIndex::VERTICES, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	//glEnableVertexAttribArray((uint)BufferIndex::VERTICES);
+
+	//if (mesh->num_normals > 0)
+	//{
+	//	glGenBuffers(1, (GLuint*)&mesh->b_normals);
+	//	glBindBuffer(GL_ARRAY_BUFFER, mesh->b_normals);
+	//	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * mesh->num_normals * 3, mesh->normals, GL_STATIC_DRAW);
+
+	//	glVertexAttribPointer((uint)BufferIndex::NORMALS, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
+	//	glEnableVertexAttribArray((uint)BufferIndex::NORMALS);
+	//}
+
+	//if (mesh->num_tex_coords > 0) // tex_coords ///////////
+	//{
+	//	glGenBuffers(1, (GLuint*)&mesh->b_texture_coords);
+	//	glBindBuffer(GL_ARRAY_BUFFER, mesh->b_texture_coords);
+	//	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * mesh->num_tex_coords * 2, mesh->texture_coords, GL_STATIC_DRAW);
+
+	//	glVertexAttribPointer((uint)BufferIndex::TEX_COORDINATES, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
+	//	glEnableVertexAttribArray((uint)BufferIndex::TEX_COORDINATES);
+	//}
+
+	//glBindVertexArray(0);
+
+}
+
+TextureInfo* ModuleRenderer3D::CreateCheckerImage() const
+{
+	GLubyte checkerImage[CHECKERS_HEIGHT][CHECKERS_WIDTH][4];
+	for (int i = 0; i < CHECKERS_HEIGHT; i++) {
+		for (int j = 0; j < CHECKERS_WIDTH; j++) {
+			int c = ((((i & 0x8) == 0) ^ (((j & 0x8)) == 0))) * 255;
+			checkerImage[i][j][0] = (GLubyte)c;
+			checkerImage[i][j][1] = (GLubyte)c;
+			checkerImage[i][j][2] = (GLubyte)c;
+			checkerImage[i][j][3] = (GLubyte)255;
+		}
 	}
 
-	if (mesh->num_tex_coords > 0) // tex_coords ///////////
-	{
-		glGenBuffers(1, (GLuint*)&mesh->b_texture_coords);
-		glBindBuffer(GL_ARRAY_BUFFER, mesh->b_texture_coords);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * mesh->num_tex_coords * 2, mesh->texture_coords, GL_STATIC_DRAW);
-	
-		glVertexAttribPointer((uint)BufferIndex::TEX_COORDINATES, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
-		glEnableVertexAttribArray((uint)BufferIndex::TEX_COORDINATES);
-	}
-	
-	glBindVertexArray(0);
+	TextureInfo* tex = new TextureInfo;
+	tex->tex_path = "Checker";
+	tex->tex_width = CHECKERS_WIDTH;
+	tex->tex_height = CHECKERS_HEIGHT;
 
-/*	glGenBuffers(1, (GLuint*)&mesh->b_vertices);
-	glBindBuffer(GL_ARRAY_BUFFER, mesh->b_vertices);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertices.size() * 8, &vertices, GL_STATIC_DRAW);
-	
-	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 8, (const GLvoid*)12);
-	
-	glEnableVertexAttribArray(2);
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(float), (const GLvoid*)20);
-*/
-	
+	//Load Texture info and parameters
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+	glGenTextures(1, &tex->tex_ID);
+	glBindTexture(GL_TEXTURE_2D, tex->tex_ID);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
+	//Send checkerImage to OpenGL
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, tex->tex_width, tex->tex_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, checkerImage);
+
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	return tex;
 }
 
 void ModuleRenderer3D::DrawMesh(MeshEntry* mesh)
@@ -319,11 +372,45 @@ void ModuleRenderer3D::DrawMesh(MeshEntry* mesh)
 
 }
 
+void ModuleRenderer3D::DrawObject(MeshEntry* mesh, TextureInfo* tex)
+{
+	glEnable(GL_TEXTURE_2D);
+
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	
+	glBindBuffer(GL_ARRAY_BUFFER, mesh->b_vertices);
+	glVertexPointer(3, GL_FLOAT, 0, NULL);
+
+	glBindBuffer(GL_ARRAY_BUFFER, mesh->b_texture_coords);
+	glTexCoordPointer(2, GL_FLOAT, 0, NULL);
+
+	glBindTexture(GL_TEXTURE_2D, tex->tex_ID);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->b_indices);
+	glDrawElements(GL_TRIANGLES, mesh->num_indices, GL_UNSIGNED_INT, NULL);
+
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+	glDisableClientState(GL_VERTEX_ARRAY);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	glDisable(GL_TEXTURE_2D);
+
+}
+
 void ModuleRenderer3D::DrawAllMeshes()
 {	
 	for (int m = 0; m < mesh_array.size(); m++)
 	{
 		DrawMesh(mesh_array[m]);
+	}
+}
+
+void ModuleRenderer3D::DrawAllObjects( TextureInfo* texture)
+{
+	for (int m = 0; m < mesh_array.size(); m++)
+	{
+		DrawObject(mesh_array[m], texture);
 	}
 }
            
